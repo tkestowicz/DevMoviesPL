@@ -1,20 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Should;
 using TheDevelopersStuff.Backend.DataSources;
 using TheDevelopersStuff.Backend.Infrastructure;
+using TheDevelopersStuff.Backend.Providers;
 using TheDevelopersStuff.Backend.Queries;
 using TheDevelopersStuff.Backend.ViewModels;
 using Xunit;
+using Xunit.Extensions;
 
 namespace TheDevelopersStuff.Tests.Integration
 {
     public class VideosLibraryQueriesTests
     {
+
+        private readonly IVideosDataSource videosDataSource;
+
+        public VideosLibraryQueriesTests()
+        {
+            videosDataSource = new VideosDataSource(new List<IVideoProvider>(2)
+            {
+                new VimeoProvider(new VimeoProvider.VimeoConfig(), new List<string>()
+                {
+                    "user14410096", //tretton37
+                }),
+                new YouTubeProvider(new YouTubeProvider.YouTubeConfig(), new List<string>()
+                {
+                    "dotNetConf"
+                })
+            });
+        }
+
         private TResult execute<TResult, TQuery>(TQuery query)
             where TQuery : IQuery<TResult>
         {
-            var handler = new VideosLibraryQueryHandlers(new VideosDataSource()) as IQueryHandler<TResult, TQuery>;
+            var handler = new VideosLibraryQueryHandlers(videosDataSource) as IQueryHandler<TResult, TQuery>;
 
             if (handler == null)
                 throw new ArgumentException("Query handler is not defined.");
@@ -28,24 +49,26 @@ namespace TheDevelopersStuff.Tests.Integration
         {
             var result = execute<List<ConferenceViewModel>, FindVideosQuery>(new FindVideosQuery());
 
-            Assert.NotEmpty(result);
+            result.ShouldNotBeEmpty();
         }
 
-        [Fact]
-        public void Query__ndc_filter_applied__returns_videos_from_ndc_only()
+        [Theory]
+        [InlineData("tretton37")]
+        [InlineData("dotNetConf")]
+        public void Query__conference_name_filter_applied__returns_videos_only_from_expected_conf(string conferenceName)
         {
             var result = execute<List<ConferenceViewModel>, FindVideosQuery>(new FindVideosQuery()
             {
                 Conference = new ConferenceFilters
                 {
-                    Name = "NDC"
+                    Name = conferenceName
                 }
             });
 
-            var hasOnlyNDCResults = result.All(v => v.Name.ToLower().Contains("ndc"));
+            var hasOnlyExpectedResults = result.All(v => v.Name.ToLower().Contains(conferenceName.ToLower()));
 
-            Assert.NotEmpty(result);
-            Assert.True(hasOnlyNDCResults);
+            result.ShouldNotBeEmpty();
+            hasOnlyExpectedResults.ShouldBeTrue();
         }
 
     }

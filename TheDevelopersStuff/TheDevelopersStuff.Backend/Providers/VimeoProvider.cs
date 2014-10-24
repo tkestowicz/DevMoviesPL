@@ -101,7 +101,6 @@ namespace TheDevelopersStuff.Backend.Providers
 
                     conference.Name = info.Name;
                     conference.Description = info.Desc;
-                    conference.Location = info.Location;
                     conference.Link = info.Link;
 
                     conferences.Add(conference);

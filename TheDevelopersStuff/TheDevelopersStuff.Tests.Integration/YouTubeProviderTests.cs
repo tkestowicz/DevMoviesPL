@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Should;
 using TheDevelopersStuff.Backend.Providers;
 using TheDevelopersStuff.Backend.ViewModels;
 using Xunit;
@@ -21,8 +22,8 @@ namespace TheDevelopersStuff.Tests.Integration
                 string.IsNullOrEmpty(video.Name) == false &&
                 string.IsNullOrEmpty(video.Id) == false;
 
-            Assert.NotEmpty(conferences);
-            conferences.TrueForAll(c => c.Videos.All(expectedConditions));
+            conferences.ShouldNotBeEmpty();
+            conferences.All(c => c.Videos.All(expectedConditions)).ShouldBeTrue();
         }
     }
 }

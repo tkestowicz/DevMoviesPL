@@ -14,7 +14,8 @@ namespace TheDevelopersStuff.Backend.DataSources
         public VideosDataSource()
             : this(new List<IVideoProvider>()
             {
-                new VimeoProvider()
+                new VimeoProvider(),
+                new YouTubeProvider()
             })
         {
             
