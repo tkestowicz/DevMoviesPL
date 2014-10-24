@@ -4,7 +4,7 @@ using TheDevelopersStuff.Backend.ViewModels;
 
 namespace TheDevelopersStuff.Backend.Queries
 {
-    public class FindVideosQuery : IQuery<List<VideosViewModel>>
+    public class FindVideosQuery : IQuery<List<ConferenceViewModel>>
     {
         public ConferenceFilters Conference { get; set; }
     }

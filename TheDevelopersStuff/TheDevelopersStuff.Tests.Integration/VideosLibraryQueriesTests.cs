@@ -26,7 +26,7 @@ namespace TheDevelopersStuff.Tests.Integration
         [Fact]
         public void Query__default_filters_applied__returns_videos_from_library()
         {
-            var result = execute<List<VideosViewModel>, FindVideosQuery>(new FindVideosQuery());
+            var result = execute<List<ConferenceViewModel>, FindVideosQuery>(new FindVideosQuery());
 
             Assert.NotEmpty(result);
         }
@@ -34,7 +34,7 @@ namespace TheDevelopersStuff.Tests.Integration
         [Fact]
         public void Query__ndc_filter_applied__returns_videos_from_ndc_only()
         {
-            var result = execute<List<VideosViewModel>, FindVideosQuery>(new FindVideosQuery()
+            var result = execute<List<ConferenceViewModel>, FindVideosQuery>(new FindVideosQuery()
             {
                 Conference = new ConferenceFilters
                 {
@@ -42,7 +42,7 @@ namespace TheDevelopersStuff.Tests.Integration
                 }
             });
 
-            var hasOnlyNDCResults = result.All(v => v.ConferenceName == "NDC");
+            var hasOnlyNDCResults = result.All(v => v.Name.ToLower().Contains("ndc"));
 
             Assert.NotEmpty(result);
             Assert.True(hasOnlyNDCResults);

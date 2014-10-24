@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TheDevelopersStuff.Backend.Queries;
 using TheDevelopersStuff.Backend.ViewModels;
 
@@ -6,6 +7,6 @@ namespace TheDevelopersStuff.Backend.DataSources
 {
     public interface IVideosDataSource
     {
-        List<VideosViewModel> FindAll(FindVideosQuery query);
+        Task<List<ConferenceViewModel>> FindAll(FindVideosQuery query);
     }
 }
