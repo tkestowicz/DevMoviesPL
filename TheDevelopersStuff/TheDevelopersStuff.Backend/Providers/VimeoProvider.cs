@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -123,7 +124,6 @@ namespace TheDevelopersStuff.Backend.Providers
                     Name = info.name,
                     Link = info.link,
                     Desc = info.bio,
-                    Location = info.location
                 };
             }
             catch (Exception e)
@@ -175,10 +175,12 @@ namespace TheDevelopersStuff.Backend.Providers
 
                 foreach (var video in result.data)
                 {
+                    string name = video.name;
                     videos.Add(new VideoViewModel
                     {
                         Url = video.link,
-                        Name = video.name
+                        Name = name,
+                        Id = name.Split('/').Last()
                     });
                 }
 

@@ -9,16 +9,4 @@ namespace TheDevelopersStuff.Backend.Providers
     {
         Task<List<ConferenceViewModel>> ChannelsInfo();
     }
-
-    public class VideoViewModel
-    {
-        public string Url { get; internal set; }
-
-        public string Id
-        {
-            get { return Url.Split('/').Last(); } 
-        }
-
-        public string Name { get; internal set; }
-    }
 }
