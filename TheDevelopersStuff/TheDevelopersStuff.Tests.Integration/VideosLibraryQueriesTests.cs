@@ -7,32 +7,19 @@ using TheDevelopersStuff.Backend.Infrastructure;
 using TheDevelopersStuff.Backend.Providers;
 using TheDevelopersStuff.Backend.Queries;
 using TheDevelopersStuff.Backend.ViewModels;
+using TheDevelopersStuff.Tests.Integration.Extensions;
+using TheDevelopersStuff.Tests.Integration.Fixtures;
 using Xunit;
 using Xunit.Extensions;
 
 namespace TheDevelopersStuff.Tests.Integration
 {
-    public class VideosLibraryQueriesTests
+    public class VideosLibraryQueriesTests : IUseFixture<VideoProvidersFixture>
     {
 
-        private readonly IVideosDataSource videosDataSource;
+        private IVideosDataSource videosDataSource;
 
-        public VideosLibraryQueriesTests()
-        {
-            videosDataSource = new VideosDataSource(new List<IVideoProvider>(2)
-            {
-                new VimeoProvider(new VimeoProvider.VimeoConfig(), new List<string>()
-                {
-                    "user14410096", //tretton37
-                }),
-                new YouTubeProvider(new YouTubeProvider.YouTubeConfig(), new List<string>()
-                {
-                    "dotNetConf"
-                })
-            });
-        }
-
-        private TResult execute<TResult, TQuery>(TQuery query)
+       private TResult execute<TResult, TQuery>(TQuery query)
             where TQuery : IQuery<TResult>
         {
             var handler = new VideosLibraryQueryHandlers(videosDataSource) as IQueryHandler<TResult, TQuery>;
@@ -47,13 +34,13 @@ namespace TheDevelopersStuff.Tests.Integration
         [Fact]
         public void Query__default_filters_applied__returns_videos_from_library()
         {
-            var result = execute<List<ConferenceViewModel>, FindVideosQuery>(new FindVideosQuery());
+            var conferences = execute<List<ConferenceViewModel>, FindVideosQuery>(new FindVideosQuery());
 
-            result.ShouldNotBeEmpty();
+            conferences.ShouldBeFilledCorrectly();
         }
 
         [Theory]
-        [InlineData("tretton37")]
+        [InlineData("Jake Fried")]
         [InlineData("dotNetConf")]
         public void Query__conference_name_filter_applied__returns_videos_only_from_expected_conf(string conferenceName)
         {
@@ -71,5 +58,9 @@ namespace TheDevelopersStuff.Tests.Integration
             hasOnlyExpectedResults.ShouldBeTrue();
         }
 
+        public void SetFixture(VideoProvidersFixture data)
+        {
+            videosDataSource = data.DataSource;
+        }
     }
 }

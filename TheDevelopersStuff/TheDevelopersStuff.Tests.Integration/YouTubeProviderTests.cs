@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Should;
+﻿using System.Threading.Tasks;
 using TheDevelopersStuff.Backend.Providers;
-using TheDevelopersStuff.Backend.ViewModels;
+using TheDevelopersStuff.Tests.Integration.Extensions;
+using TheDevelopersStuff.Tests.Integration.Fixtures;
 using Xunit;
 
 namespace TheDevelopersStuff.Tests.Integration
 {
-    public class YouTubeProviderTests
+    public class YouTubeProviderTests : IUseFixture<VideoProvidersFixture>
     {
+        private IVideoProvider provider;
+
         [Fact]
         public async Task FindAll__no_filters_applied__returns_all_videos_from_channel()
         {
-            var provider = new YouTubeProvider();
             var conferences = await provider.ChannelsInfo();
 
-            Func<VideoViewModel, bool> expectedConditions = video =>
-                string.IsNullOrEmpty(video.Url) == false &&
-                string.IsNullOrEmpty(video.Name) == false &&
-                string.IsNullOrEmpty(video.Id) == false;
+            conferences.ShouldBeFilledCorrectly();
+        }
 
-            conferences.ShouldNotBeEmpty();
-            conferences.All(c => c.Videos.All(expectedConditions)).ShouldBeTrue();
+        public void SetFixture(VideoProvidersFixture data)
+        {
+            provider = data.YouTubeProvider;
         }
     }
 }
