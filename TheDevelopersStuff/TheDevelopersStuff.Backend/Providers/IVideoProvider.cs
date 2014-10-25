@@ -7,6 +7,6 @@ namespace TheDevelopersStuff.Backend.Providers
 {
     internal interface IVideoProvider
     {
-        Task<List<ConferenceViewModel>> ChannelsInfo();
+        Task<List<ConferenceViewModel>> ChannelsData();
     }
 }

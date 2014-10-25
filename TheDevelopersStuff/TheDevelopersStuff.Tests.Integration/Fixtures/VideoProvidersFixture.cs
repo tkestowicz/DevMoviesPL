@@ -35,7 +35,7 @@ namespace TheDevelopersStuff.Tests.Integration.Fixtures
             {
                 return new YouTubeProvider(new YouTubeProvider.YouTubeConfig(), new List<string>()
                 {
-                    "dotNetConf"
+                    "shanselman" // this channel provides all needed information and has not many vids
                 });
             }
         }

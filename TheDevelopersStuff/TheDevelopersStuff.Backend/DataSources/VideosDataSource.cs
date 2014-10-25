@@ -32,7 +32,7 @@ namespace TheDevelopersStuff.Backend.DataSources
 
             foreach (var provider in providers)
             {
-                results.AddRange(await provider.ChannelsInfo());
+                results.AddRange(await provider.ChannelsData());
             }
 
             return results;

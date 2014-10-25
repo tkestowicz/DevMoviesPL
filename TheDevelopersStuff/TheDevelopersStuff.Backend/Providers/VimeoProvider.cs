@@ -85,7 +85,7 @@ namespace TheDevelopersStuff.Backend.Providers
             this.accounts = accounts;
         }
 
-        public async Task<List<ConferenceViewModel>> ChannelsInfo()
+        public async Task<List<ConferenceViewModel>> ChannelsData()
         {
             using (var client = webClientFactory(config))
             {

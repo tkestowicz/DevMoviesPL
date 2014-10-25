@@ -20,7 +20,7 @@ namespace TheDevelopersStuff.Tests.Integration
         [Fact]
         public async Task FindAll__no_filters_given__returns_all_videos()
         {
-            var conferences = await provider.ChannelsInfo();
+            var conferences = await provider.ChannelsData();
 
             conferences.ShouldBeFilledCorrectly();
         }

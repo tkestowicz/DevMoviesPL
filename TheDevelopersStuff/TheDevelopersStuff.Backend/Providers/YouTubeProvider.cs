@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
@@ -33,7 +35,7 @@ namespace TheDevelopersStuff.Backend.Providers
 
         private readonly YouTubeService service;
 
-        internal YouTubeProvider()
+        public YouTubeProvider()
             : this(new YouTubeConfig(), new List<string>()
             {
                 "ABBDevDay",
@@ -55,7 +57,7 @@ namespace TheDevelopersStuff.Backend.Providers
         }
 
 
-        public async Task<List<ConferenceViewModel>> ChannelsInfo()
+        public async Task<List<ConferenceViewModel>> ChannelsData()
         {
             var results = new List<ConferenceViewModel>();
 
@@ -68,11 +70,12 @@ namespace TheDevelopersStuff.Backend.Providers
                 if (info == null)
                     continue;
 
+                conference.Id = info.Id;
                 conference.Name = info.Snippet.Title;
                 conference.Description = info.Snippet.Description;
-                conference.Link = config.ChannelUri(info.Id);
+                conference.Link = config.ChannelUri(conference.Id);
 
-                conference.Videos.AddRange(await ChannelVideos(info.Id));
+                conference.Videos.AddRange(await ChannelVideos(conference.Id));
 
                 results.Add(conference);
             }
@@ -107,14 +110,49 @@ namespace TheDevelopersStuff.Backend.Providers
                     {
                         Name = video.Snippet.Title,
                         Url = config.VideoUri(video.Id.VideoId),
-                        Id = video.Id.VideoId
+                        Id = video.Id.VideoId,
+                        PublicationDate = video.Snippet.PublishedAt ?? new DateTime(),
+                        Description = video.Snippet.Description
                     });
                 }
 
                 nextPage = videos.NextPageToken;
             } while (string.IsNullOrEmpty(nextPage) == false);
 
+            await FillStatistics(results);
+
             return results;
+        }
+
+        private async Task FillStatistics(List<VideoViewModel> results)
+        {
+            var videosIds = results.Select(c => c.Id).ToArray();
+
+            var request = service.Videos.List("statistics");
+
+            const int perPage = 50;
+
+            request.MaxResults = perPage;
+
+            var skip = 0;
+            do
+            {
+                request.Id = string.Join(",", videosIds.Skip(skip).Take(perPage));
+
+                var response = await request.ExecuteAsync();
+
+                foreach (var statistics in response.Items)
+                {
+                    var vid = results.First(v => v.Id == statistics.Id);
+
+                    vid.Likes = Convert.ToInt32(statistics.Statistics.LikeCount);
+                    vid.Dislikes = Convert.ToInt32(statistics.Statistics.DislikeCount);
+                    vid.Views = Convert.ToInt32(statistics.Statistics.ViewCount);
+                }
+
+                skip += perPage;
+
+            } while (skip < videosIds.Length);
         }
 
         private async Task<Channel> ChannelInfo(string channel)
