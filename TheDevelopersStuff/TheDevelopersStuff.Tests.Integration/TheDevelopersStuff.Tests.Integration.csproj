@@ -110,7 +110,7 @@
     <Compile Include="Extensions\ViewModelsExtensions.cs" />
     <Compile Include="Fixtures\VideoProvidersFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VideosLibraryQueriesTests.cs" />
+    <Compile Include="VideosDataSourceTests.cs" />
     <Compile Include="VimeoProviderTests.cs" />
     <Compile Include="YouTubeProviderTests.cs" />
   </ItemGroup>

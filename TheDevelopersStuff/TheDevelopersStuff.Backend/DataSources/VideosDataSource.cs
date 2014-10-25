@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TheDevelopersStuff.Backend.Providers;
-using TheDevelopersStuff.Backend.Queries;
 using TheDevelopersStuff.Backend.ViewModels;
 
 namespace TheDevelopersStuff.Backend.DataSources
@@ -26,7 +25,7 @@ namespace TheDevelopersStuff.Backend.DataSources
             providers = videoProviders;
         }
 
-        public async Task<List<ConferenceViewModel>> FindAll(FindVideosQuery query)
+        public async Task<List<ConferenceViewModel>> FindAll()
         {
             var results = new List<ConferenceViewModel>();
 

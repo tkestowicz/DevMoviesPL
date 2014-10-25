@@ -18,7 +18,7 @@ namespace TheDevelopersStuff.Backend.Queries
 
         public List<ConferenceViewModel> Handle(FindVideosQuery query)
         {
-            var results = videosLibraryDataSource.FindAll(query).GetAwaiter().GetResult();
+            var results = videosLibraryDataSource.FindAll().GetAwaiter().GetResult();
 
             if (query.Conference != null && string.IsNullOrEmpty(query.Conference.Name) == false)
                 results = results.Where(c => c.Name.ToLower().Contains(query.Conference.Name.ToLower())).ToList();
