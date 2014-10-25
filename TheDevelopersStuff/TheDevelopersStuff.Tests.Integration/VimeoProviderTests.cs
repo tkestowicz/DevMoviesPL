@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Ploeh.AutoFixture;
 using Should;
 using TheDevelopersStuff.Backend.Providers;
 using TheDevelopersStuff.Backend.ViewModels;
@@ -21,6 +22,9 @@ namespace TheDevelopersStuff.Tests.Integration
         public async Task FindAll__no_filters_given__returns_all_videos()
         {
             var conferences = await provider.ChannelsData();
+
+            // Vimeo doesn't provide dislikes
+            conferences.ForEach(c => c.Videos.ForEach(v => v.Dislikes = new Fixture().Create<int>()));
 
             conferences.ShouldBeFilledCorrectly();
         }

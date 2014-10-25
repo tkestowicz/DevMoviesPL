@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -95,13 +96,14 @@ namespace TheDevelopersStuff.Backend.Providers
                 {
                     var conference = new ConferenceViewModel();
 
-                    conference.Videos.AddRange(await GetAllVideos(client, account));
-
                     var info = await GetChannelInfo(client, account);
 
+                    conference.Id = info.Id;
                     conference.Name = info.Name;
                     conference.Description = info.Desc;
                     conference.Link = info.Link;
+
+                    conference.Videos.AddRange(await GetAllVideos(client, account));
 
                     conferences.Add(conference);
                 }
@@ -118,8 +120,10 @@ namespace TheDevelopersStuff.Backend.Providers
 
                 dynamic info = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
 
+                string uri = info.uri;
                 return new
                 {
+                    Id = uri.Split('/').Last(),
                     Name = info.name,
                     Link = info.link,
                     Desc = info.bio,
@@ -175,12 +179,26 @@ namespace TheDevelopersStuff.Backend.Providers
                 foreach (var video in result.data)
                 {
                     string name = video.name;
-                    videos.Add(new VideoViewModel
+                    string pubDate = video.created_time;
+
+                    var vm = new VideoViewModel
                     {
                         Url = video.link,
                         Name = name,
-                        Id = name.Split('/').Last()
-                    });
+                        Description = video.description,
+                        PublicationDate = Convert.ToDateTime(pubDate),
+                        Likes = video.metadata.connections.likes.total,
+                        Views = video.stats.plays,
+                        Id = name.Split('/').Last(),
+                    };
+
+                    foreach (var tag in video.tags)
+                    {
+                        string value = tag.tag;
+                        vm.Tags.Add(value);
+                    }
+
+                    videos.Add(vm);
                 }
 
                 return result.paging.next;
