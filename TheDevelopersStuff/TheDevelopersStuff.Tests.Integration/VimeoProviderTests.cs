@@ -19,7 +19,7 @@ namespace TheDevelopersStuff.Tests.Integration
         IVideoProvider provider;
 
         [Fact]
-        public async Task FindAll__no_filters_given__returns_all_videos()
+        public async Task ChannelsData__explore_channel__returns_complete_info()
         {
             var conferences = await provider.ChannelsData();
 
