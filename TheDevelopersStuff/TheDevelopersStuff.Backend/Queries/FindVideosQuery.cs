@@ -6,6 +6,6 @@ namespace TheDevelopersStuff.Backend.Queries
 {
     public class FindVideosQuery : IQuery<List<ConferenceViewModel>>
     {
-        public ConferenceFilters Conference { get; set; }
+        public string ChannelName { get; set; }
     }
 }

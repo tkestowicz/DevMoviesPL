@@ -108,7 +108,6 @@
     <Compile Include="Providers\IVideoProvider.cs" />
     <Compile Include="Providers\VimeoProvider.cs" />
     <Compile Include="Providers\YouTubeProvider.cs" />
-    <Compile Include="Queries\ConferenceFilters.cs" />
     <Compile Include="Queries\FindVideosQuery.cs" />
     <Compile Include="Queries\VideosLibraryQueryHandlers.cs" />
     <Compile Include="ViewModels\ConferenceViewModel.cs" />

@@ -10,16 +10,16 @@ namespace TheDevelopersStuff.Backend.ViewModels
             Tags = new List<string>();
         }
 
-        public string Url { get; internal set; }
+        public string Url { get; set; }
 
-        public string Id { get; internal set; }
+        public string Id { get; set; }
 
-        public string Name { get; internal set; }
-        public DateTime PublicationDate { get; internal set; }
-        public string Description { get; internal set; }
-        public int Views { get; internal set; }
-        public int Likes { get; internal set; }
-        public int Dislikes { get; internal set; }
-        public List<string> Tags { get; internal set; }
+        public string Name { get; set; }
+        public DateTime PublicationDate { get; set; }
+        public string Description { get; set; }
+        public int Views { get;  set; }
+        public int Likes { get;  set; }
+        public int Dislikes { get;  set; }
+        public List<string> Tags { get; set; }
     }
 }
