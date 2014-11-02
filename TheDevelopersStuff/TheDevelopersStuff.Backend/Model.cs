@@ -31,7 +31,8 @@ namespace TheDevelopersStuff.Backend.Model
                         Id = channel.Id,
                         Link = channel.Link,
                         Name = channel.Name
-                    }
+                    },
+                    Tags = v.Tags.Select(t => t.Name).ToList()
                 };
             });
         }

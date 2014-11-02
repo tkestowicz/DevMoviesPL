@@ -109,6 +109,31 @@ namespace TheDevelopersStuff.Tests.Integration
                 .ShouldBeTrue();
         }
 
+        [Fact]
+        public void Query__tags_filter_given__returns_matching_results()
+        {
+            var tags = videos
+                .First()
+                .Tags
+                .ToList();
+
+            tags.AddRange(videos.Last().Tags);
+
+            var expectedTags = tags.Distinct().Select(t => t.Name);
+
+            var actualResult = create_handler().Handle(new FindVideosQuery()
+            {
+                Tags = expectedTags
+            });
+
+            actualResult.ForEach(v =>
+            {
+                v.Tags
+                    .Any(t => expectedTags.Contains(t))
+                    .ShouldBeTrue("Video does not contain any of expected tags.");
+            });
+        }
+
         public void SetFixture(MongoDbFixture data)
         {
             db = data.Db;

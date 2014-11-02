@@ -30,6 +30,7 @@ namespace TheDevelopersStuff.Tests.Integration.Extensions
                 a.ChannelInfo.Name.ShouldEqual(e.ChannelInfo.Name);
                 a.ChannelInfo.Id.ShouldEqual(e.ChannelInfo.Id);
                 a.ChannelInfo.Link.ShouldEqual(e.ChannelInfo.Link);
+                a.Tags.SequenceEqual(e.Tags).ShouldBeTrue();
             }
         }
     }

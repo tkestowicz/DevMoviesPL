@@ -22,10 +22,10 @@ namespace TheDevelopersStuff.Backend.Queries
 
         public List<VideoViewModel> Handle(FindVideosQuery query)
         {
-            Func<Channel, bool> name = conf =>
+            Func<Channel, bool> name = vid =>
             {
                 if (string.IsNullOrEmpty(query.ChannelName) == false)
-                    return conf.Name == query.ChannelName;
+                    return vid.Name == query.ChannelName;
 
                 return true;
             };
@@ -39,9 +39,25 @@ namespace TheDevelopersStuff.Backend.Queries
                 return true;
             };
 
+            Func<Video, bool> tags = vid =>
+            {
+                if (query.Tags.Any())
+                {
+                    var r = vid
+                        .Tags
+                        .Select(t => t.Name)
+                        .ContainsAny(query.Tags);
+
+                    return r;
+                }
+
+                return true;
+            };
+
             var videos = db.GetCollection<Video>("Videos")
                 .FindAll()
                 .Where(publicationYear)
+                .Where(tags)
                 .ToList();
 
             var channelsToFind = videos
