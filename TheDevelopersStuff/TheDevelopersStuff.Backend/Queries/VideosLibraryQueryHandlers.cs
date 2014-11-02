@@ -42,14 +42,10 @@ namespace TheDevelopersStuff.Backend.Queries
             Func<Video, bool> tags = vid =>
             {
                 if (query.Tags.Any())
-                {
-                    var r = vid
+                    return vid
                         .Tags
                         .Select(t => t.Name)
                         .ContainsAny(query.Tags);
-
-                    return r;
-                }
 
                 return true;
             };
@@ -78,6 +74,8 @@ namespace TheDevelopersStuff.Backend.Queries
 
             return videos
                 .Where(v => channelsToFind.Contains(v.ChannelId))
+                .Skip((query.Pagination.Page - 1)*query.Pagination.PerPage)
+                .Take(query.Pagination.PerPage)
                 .ToViewModel(channels)
                 .ToList();
         }

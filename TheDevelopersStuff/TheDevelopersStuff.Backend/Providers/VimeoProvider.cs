@@ -7,7 +7,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TheDevelopersStuff.Backend.ViewModels;
+using TheDevelopersStuff.Backend.DataSources.DTO;
+using VideoViewModel = TheDevelopersStuff.Backend.ViewModels.VideoViewModel;
 
 namespace TheDevelopersStuff.Backend.Providers
 {
@@ -86,15 +87,15 @@ namespace TheDevelopersStuff.Backend.Providers
             this.accounts = accounts;
         }
 
-        public async Task<List<ConferenceViewModel>> ChannelsData()
+        public async Task<List<ChannelDTO>> ChannelsData()
         {
             using (var client = webClientFactory(config))
             {
-                var conferences = new List<ConferenceViewModel>();
+                var conferences = new List<ChannelDTO>();
 
                 foreach (var account in accounts)
                 {
-                    var conference = new ConferenceViewModel();
+                    var conference = new ChannelDTO();
 
                     var info = await GetChannelInfo(client, account);
 

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
-using TheDevelopersStuff.Backend.ViewModels;
+using TheDevelopersStuff.Backend.DataSources.DTO;
+using VideoViewModel = TheDevelopersStuff.Backend.ViewModels.VideoViewModel;
 
 namespace TheDevelopersStuff.Backend.Providers
 {
@@ -57,13 +58,13 @@ namespace TheDevelopersStuff.Backend.Providers
         }
 
 
-        public async Task<List<ConferenceViewModel>> ChannelsData()
+        public async Task<List<ChannelDTO>> ChannelsData()
         {
-            var results = new List<ConferenceViewModel>();
+            var results = new List<ChannelDTO>();
 
             foreach (var channel in channels)
             {
-                var conference = new ConferenceViewModel();
+                var conference = new ChannelDTO();
 
                 var info = await ChannelInfo(channel);
 

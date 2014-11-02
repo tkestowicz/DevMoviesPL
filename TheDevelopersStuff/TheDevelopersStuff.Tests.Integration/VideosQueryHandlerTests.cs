@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.ComTypes;
 using MongoDB.Driver;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
+using Ploeh.AutoFixture.Xunit;
 using Should;
 using TheDevelopersStuff.Backend.Model;
 using TheDevelopersStuff.Backend.Queries;
@@ -42,7 +43,7 @@ namespace TheDevelopersStuff.Tests.Integration
         {
             var actualResult = create_handler().Handle(new FindVideosQuery());
 
-            actualResult.ShouldEqual(videos.ToViewModel(channels));
+            actualResult.ShouldEqual(videos.TransformToExpectedViewModel(channels));
         }
 
         [Fact]
@@ -132,6 +133,43 @@ namespace TheDevelopersStuff.Tests.Integration
                     .Any(t => expectedTags.Contains(t))
                     .ShouldBeTrue("Video does not contain any of expected tags.");
             });
+        }
+
+        [Theory]
+        [InlineData(1, 5)]
+        [InlineAutoData(2, 2)]
+        [InlineAutoData(3, 1)]
+        public void Query__page_and_per_page_filters_set__returns_appropriate_number_of_records(int page, int perPage)
+        {
+            var actualResult = create_handler().Handle(new FindVideosQuery()
+            {
+                Pagination = new PaginationSettings()
+                {
+                    Page = page,
+                    PerPage = perPage
+                }
+            });
+
+            var expectedVideos = videos
+                .Skip((page - 1)*perPage)
+                .Take(perPage);
+
+            actualResult.ShouldEqual(expectedVideos.TransformToExpectedViewModel(channels));
+        }
+
+        [Fact]
+        public void Query__page_and_per_page_not_given__uses_default_settings()
+        {
+            const int defaultPage = 1;
+            const int defaultPerPage = 10;
+
+            var actualResult = create_handler().Handle(new FindVideosQuery());
+
+            var expectedVideos = videos
+                .Skip((defaultPage - 1) * defaultPerPage)
+                .Take(defaultPerPage);
+
+            actualResult.ShouldEqual(expectedVideos.TransformToExpectedViewModel(channels));
         }
 
         public void SetFixture(MongoDbFixture data)

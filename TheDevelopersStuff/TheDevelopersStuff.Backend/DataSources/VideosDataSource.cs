@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TheDevelopersStuff.Backend.DataSources.DTO;
 using TheDevelopersStuff.Backend.Providers;
 using TheDevelopersStuff.Backend.ViewModels;
 
@@ -25,9 +26,9 @@ namespace TheDevelopersStuff.Backend.DataSources
             providers = videoProviders;
         }
 
-        public async Task<List<ConferenceViewModel>> FindAll()
+        public async Task<List<ChannelDTO>> FindAll()
         {
-            var results = new List<ConferenceViewModel>();
+            var results = new List<ChannelDTO>();
 
             foreach (var provider in providers)
             {

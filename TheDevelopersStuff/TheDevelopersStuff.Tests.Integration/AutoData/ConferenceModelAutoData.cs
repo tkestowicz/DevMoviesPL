@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit;
+using TheDevelopersStuff.Backend.DataSources.DTO;
 using TheDevelopersStuff.Backend.Model;
-using TheDevelopersStuff.Backend.ViewModels;
+using VideoViewModel = TheDevelopersStuff.Backend.ViewModels.VideoViewModel;
 
 namespace TheDevelopersStuff.Tests.Integration.AutoData
 {
@@ -14,7 +15,7 @@ namespace TheDevelopersStuff.Tests.Integration.AutoData
         {
             public void Customize(IFixture fixture)
             {
-                Func<ConferenceViewModel> conference = () => fixture.Build<ConferenceViewModel>()
+                Func<ChannelDTO> conference = () => fixture.Build<ChannelDTO>()
                     .Do(c => c.Videos.AddRange(fixture.CreateMany<VideoViewModel>()))
                     .Create();
 

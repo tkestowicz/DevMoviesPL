@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Should;
 using TheDevelopersStuff.Backend.DataSources;
+using TheDevelopersStuff.Backend.DataSources.DTO;
 using TheDevelopersStuff.Backend.ViewModels;
 using TheDevelopersStuff.Tests.Integration.Fixtures;
 using Xunit;
@@ -13,7 +14,7 @@ namespace TheDevelopersStuff.Tests.Integration
     public class VideosDataSourceTests : IUseFixture<VideoProvidersFixture>
     {
         private IVideosDataSource dataSource;
-        private List<ConferenceViewModel> conferences;
+        private List<ChannelDTO> conferences;
 
         [Theory]
         [InlineData("Jake Fried")] // vimeo source

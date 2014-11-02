@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace TheDevelopersStuff.Backend.ViewModels
+namespace TheDevelopersStuff.Backend.DataSources.DTO
 {
-    public class VideoViewModel
+    public class VideoDTO
     {
-        public VideoViewModel()
+        public VideoDTO()
         {
             Tags = new List<string>();
         }
@@ -21,7 +21,5 @@ namespace TheDevelopersStuff.Backend.ViewModels
         public int Likes { get; set; }
         public int Dislikes { get; set; }
         public List<string> Tags { get; set; }
-
-        public ChannelInfoViewModel ChannelInfo { get; set; }
     }
 }

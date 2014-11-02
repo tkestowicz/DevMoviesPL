@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Should;
-using TheDevelopersStuff.Backend.ViewModels;
+using TheDevelopersStuff.Backend.DataSources.DTO;
+using VideoViewModel = TheDevelopersStuff.Backend.ViewModels.VideoViewModel;
 
 namespace TheDevelopersStuff.Tests.Integration.Extensions
 {
     public static class ViewModelsExtensions
     {
-        public static void ShouldBeFilledCorrectly(this List<ConferenceViewModel> conferences)
+        public static void ShouldBeFilledCorrectly(this List<ChannelDTO> conferences)
         {
             conferences.ShouldNotBeEmpty();
             conferences.ForEach(ShouldBeFilledCorrectly);
         }
 
-        public static void ShouldBeFilledCorrectly(this ConferenceViewModel conference)
+        public static void ShouldBeFilledCorrectly(this ChannelDTO conference)
         {
             conference.Id.ShouldNotBeEmpty();
             conference.Name.ShouldNotBeEmpty();

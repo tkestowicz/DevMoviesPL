@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="DataSources\IVideosDataSource.cs" />
     <Compile Include="DataSources\VideosDataSource.cs" />
+    <Compile Include="DataSources\DTO\VideoDTO.cs" />
     <Compile Include="Infrastructure\IQuery.cs" />
     <Compile Include="Infrastructure\IQueryHandler.cs" />
     <Compile Include="Model.cs" />
@@ -117,7 +118,8 @@
     <Compile Include="Providers\YouTubeProvider.cs" />
     <Compile Include="Queries\FindVideosQuery.cs" />
     <Compile Include="Queries\VideosLibraryQueryHandlers.cs" />
-    <Compile Include="ViewModels\ConferenceViewModel.cs" />
+    <Compile Include="ViewModels\ChannelInfoViewModel.cs" />
+    <Compile Include="DataSources\DTO\ChannelDTO.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

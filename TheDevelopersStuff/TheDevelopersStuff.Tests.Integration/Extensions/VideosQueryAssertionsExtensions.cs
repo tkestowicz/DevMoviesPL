@@ -33,5 +33,33 @@ namespace TheDevelopersStuff.Tests.Integration.Extensions
                 a.Tags.SequenceEqual(e.Tags).ShouldBeTrue();
             }
         }
+
+        public static IEnumerable<VideoViewModel> TransformToExpectedViewModel(this IEnumerable<Video> videos,
+             IEnumerable<Channel> channels)
+        {
+            return videos.Select(v =>
+            {
+                var channel = channels.FirstOrDefault(c => c.Id == v.ChannelId) ?? new Channel();
+
+                return new VideoViewModel
+                {
+                    Id = v.Id,
+                    Name = v.Title,
+                    Url = v.Link,
+                    Description = v.Description,
+                    Dislikes = v.Stats.Dislikes,
+                    Likes = v.Stats.Likes,
+                    PublicationDate = v.PublicationDate,
+                    ChannelInfo = new ChannelInfoViewModel()
+                    {
+                        Description = channel.Description,
+                        Id = channel.Id,
+                        Link = channel.Link,
+                        Name = channel.Name
+                    },
+                    Tags = v.Tags.Select(t => t.Name).ToList()
+                };
+            });
+        }
     }
 }
