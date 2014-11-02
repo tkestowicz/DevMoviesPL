@@ -40,7 +40,7 @@ namespace TheDevelopersStuff.Tests.Integration.Extensions
         public static void ShouldBeFilledCorrectly(this VideoViewModel video)
         {
             video.Id.ShouldNotBeEmpty();
-            video.Name.ShouldNotBeEmpty();
+            video.Title.ShouldNotBeEmpty();
             video.Url.ShouldNotBeEmpty();
             video.PublicationDate.ShouldNotEqual(new DateTime());
             video.Description.ShouldNotBeEmpty();

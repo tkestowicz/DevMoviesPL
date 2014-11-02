@@ -185,7 +185,7 @@ namespace TheDevelopersStuff.Backend.Providers
                     var vm = new VideoViewModel
                     {
                         Url = video.link,
-                        Name = name,
+                        Title = name,
                         Description = video.description,
                         PublicationDate = Convert.ToDateTime(pubDate),
                         Likes = video.metadata.connections.likes.total,

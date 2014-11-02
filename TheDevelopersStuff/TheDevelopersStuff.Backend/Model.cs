@@ -19,7 +19,7 @@ namespace TheDevelopersStuff.Backend.Model
                 return new VideoViewModel
                 {
                     Id = v.Id,
-                    Name = v.Title,
+                    Title = v.Title,
                     Url = v.Link,
                     Description = v.Description,
                     Dislikes = v.Stats.Dislikes,

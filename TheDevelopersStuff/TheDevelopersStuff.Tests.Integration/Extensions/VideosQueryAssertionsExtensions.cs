@@ -22,7 +22,7 @@ namespace TheDevelopersStuff.Tests.Integration.Extensions
                 a.Likes.ShouldEqual(e.Likes);
                 a.Dislikes.ShouldEqual(e.Dislikes);
                 a.Views.ShouldEqual(e.Views);
-                a.Name.ShouldEqual(e.Name);
+                a.Title.ShouldEqual(e.Title);
                 a.Description.ShouldEqual(e.Description);
                 a.PublicationDate.ShouldEqual(e.PublicationDate);
                 a.Url.ShouldEqual(e.Url);
@@ -44,7 +44,7 @@ namespace TheDevelopersStuff.Tests.Integration.Extensions
                 return new VideoViewModel
                 {
                     Id = v.Id,
-                    Name = v.Title,
+                    Title = v.Title,
                     Url = v.Link,
                     Description = v.Description,
                     Dislikes = v.Stats.Dislikes,

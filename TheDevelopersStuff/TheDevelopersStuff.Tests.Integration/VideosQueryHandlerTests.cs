@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 using Ploeh.AutoFixture.Xunit;
@@ -42,6 +43,14 @@ namespace TheDevelopersStuff.Tests.Integration
         public void Query__no_filters_given__returns_corresponding_data()
         {
             var actualResult = create_handler().Handle(new FindVideosQuery());
+
+            actualResult.ShouldEqual(videos.TransformToExpectedViewModel(channels));
+        }
+
+        [Fact]
+        public void Query__query_object_not_given__uses_default_settings()
+        {
+            var actualResult = create_handler().Handle(null);
 
             actualResult.ShouldEqual(videos.TransformToExpectedViewModel(channels));
         }
@@ -171,6 +180,90 @@ namespace TheDevelopersStuff.Tests.Integration
 
             actualResult.ShouldEqual(expectedVideos.TransformToExpectedViewModel(channels));
         }
+
+        [Fact]
+        public void Query__order_not_set__uses_default_order()
+        {
+            var actualResult = create_handler().Handle(new FindVideosQuery());
+
+            var expectedOrder = videos
+                .TransformToExpectedViewModel(channels)
+                .OrderByDescending(v => v.PublicationDate)
+                .Select(v => v.Id)
+                .ToArray();
+
+            actualResult
+                .Select(v => v.Id)
+                .ToArray()
+                .ShouldEqual(expectedOrder);
+        }
+
+        [Fact]
+        public void Query__order_ascending_by_name__result_is_sorted()
+        {
+            var orderBy = new OrderSettings()
+            {
+                PropertyName = "Title",
+                Direction = OrderByDirection.Ascending
+            };
+            
+            var expectedOrder = videos
+                .TransformToExpectedViewModel(channels)
+                .OrderBy(v => v.Title);
+
+            execute_sort(orderBy, expectedOrder);
+        }
+
+        [Fact]
+        public void Query__order_ascending_by_likes__result_is_sorted()
+        {
+            var orderBy = new OrderSettings()
+                {
+                    PropertyName = "Likes",
+                    Direction = OrderByDirection.Ascending
+                };
+
+            var expectedOrder = videos
+                .TransformToExpectedViewModel(channels)
+                .OrderBy(v => v.Likes);
+
+            execute_sort(orderBy, expectedOrder);
+        }
+
+        [Fact]
+        public void Query__order_ascending_by_channel_name__result_is_sorted()
+        {
+            var orderBy = new OrderSettings()
+            {
+                PropertyName = "ChannelInfo.Name",
+                Direction = OrderByDirection.Ascending
+            };
+
+            var expectedOrder = videos
+                .TransformToExpectedViewModel(channels)
+                .OrderBy(v => v.ChannelInfo.Name);
+
+            execute_sort(orderBy, expectedOrder);
+        }
+
+        private void execute_sort(OrderSettings orderBy, IEnumerable<VideoViewModel> expectedOrder)
+        {
+            var actualResult = create_handler().Handle(new FindVideosQuery()
+            {
+                OrderBy = orderBy
+            });
+
+            var expected = expectedOrder
+                .Select(v => v.Id)
+                .ToArray();
+            
+            actualResult
+                .Select(v => v.Id)
+                .ToArray()
+                .ShouldEqual(expected);
+        }
+
+
 
         public void SetFixture(MongoDbFixture data)
         {

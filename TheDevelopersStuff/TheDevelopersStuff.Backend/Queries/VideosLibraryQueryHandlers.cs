@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
+using TheDevelopersStuff.Backend.Extensions;
 using TheDevelopersStuff.Backend.Infrastructure;
 using TheDevelopersStuff.Backend.Model;
 using TheDevelopersStuff.Backend.ViewModels;
@@ -22,6 +24,9 @@ namespace TheDevelopersStuff.Backend.Queries
 
         public List<VideoViewModel> Handle(FindVideosQuery query)
         {
+            if(query == null)
+                query = new FindVideosQuery();
+
             Func<Channel, bool> name = vid =>
             {
                 if (string.IsNullOrEmpty(query.ChannelName) == false)
@@ -77,6 +82,8 @@ namespace TheDevelopersStuff.Backend.Queries
                 .Skip((query.Pagination.Page - 1)*query.Pagination.PerPage)
                 .Take(query.Pagination.PerPage)
                 .ToViewModel(channels)
+                .AsQueryable()
+                .OrderBy(query.OrderBy.PropertyName, query.OrderBy.Direction)
                 .ToList();
         }
     }

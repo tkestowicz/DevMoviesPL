@@ -109,7 +109,7 @@ namespace TheDevelopersStuff.Backend.Providers
 
                     results.Add(new VideoViewModel()
                     {
-                        Name = video.Snippet.Title,
+                        Title = video.Snippet.Title,
                         Url = config.VideoUri(video.Id.VideoId),
                         Id = video.Id.VideoId,
                         PublicationDate = video.Snippet.PublishedAt ?? new DateTime(),
