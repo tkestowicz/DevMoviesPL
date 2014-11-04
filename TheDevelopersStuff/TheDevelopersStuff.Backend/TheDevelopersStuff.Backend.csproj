@@ -114,7 +114,9 @@
     <Compile Include="Infrastructure\IQueryHandler.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\IFiltersProvider.cs" />
     <Compile Include="Providers\IVideoProvider.cs" />
+    <Compile Include="Providers\VideosFiltersProvider.cs" />
     <Compile Include="Providers\VimeoProvider.cs" />
     <Compile Include="Providers\YouTubeProvider.cs" />
     <Compile Include="Queries\FindVideosQuery.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="Queries\VideosLibraryQueryHandlers.cs" />
     <Compile Include="ViewModels\ChannelInfoViewModel.cs" />
     <Compile Include="DataSources\DTO\ChannelDTO.cs" />
+    <Compile Include="ViewModels\VideosFiltersViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

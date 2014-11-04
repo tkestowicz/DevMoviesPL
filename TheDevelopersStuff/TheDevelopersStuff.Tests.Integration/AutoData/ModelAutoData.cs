@@ -5,31 +5,9 @@ using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit;
 using TheDevelopersStuff.Backend.DataSources.DTO;
 using TheDevelopersStuff.Backend.Model;
-using VideoViewModel = TheDevelopersStuff.Backend.ViewModels.VideoViewModel;
 
 namespace TheDevelopersStuff.Tests.Integration.AutoData
 {
-    public class ConferenceModelAutoData : AutoDataAttribute
-    {
-        public class Customization : ICustomization
-        {
-            public void Customize(IFixture fixture)
-            {
-                Func<ChannelDTO> conference = () => fixture.Build<ChannelDTO>()
-                    .Do(c => c.Videos.AddRange(fixture.CreateMany<VideoViewModel>()))
-                    .Create();
-
-                fixture.Register(conference);
-            }
-        }
-
-        public ConferenceModelAutoData()
-            : base(new Fixture().Customize(new Customization()))
-        {
-            
-        }
-    }
-
     public class ModelAutoData : AutoDataAttribute
     {
         public class Customization : ICustomization

@@ -19,21 +19,8 @@ using Xunit.Extensions;
 
 namespace TheDevelopersStuff.Tests.Integration
 {
-    public class VideosQueryHandlerTests : IUseFixture<MongoDbFixture>
+    public class VideosQueryHandlerTests : WithPopulatedMongoDb
     {
-        private MongoDatabase db;
-        private readonly IEnumerable<Video> videos;
-        private readonly IEnumerable<Channel> channels;
-
-        public VideosQueryHandlerTests()
-        {
-            var fixture = new Fixture()
-                .Customize(new ModelAutoData.Customization());
-
-            videos = fixture.Resolve<IEnumerable<Video>>();
-            channels = fixture.Resolve<IEnumerable<Channel>>();
-        }
-
         public VideosLibraryQueryHandlers create_handler()
         {
             return new VideosLibraryQueryHandlers(db);
@@ -261,17 +248,6 @@ namespace TheDevelopersStuff.Tests.Integration
                 .Select(v => v.Id)
                 .ToArray()
                 .ShouldEqual(expected);
-        }
-
-
-
-        public void SetFixture(MongoDbFixture data)
-        {
-            db = data.Db;
-            data.Reset();
-
-            db.GetCollection("Videos").InsertBatch(videos);
-            db.GetCollection("Channels").InsertBatch(channels);
         }
     }
 
