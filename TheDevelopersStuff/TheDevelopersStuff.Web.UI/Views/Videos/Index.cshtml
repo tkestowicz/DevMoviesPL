@@ -1,0 +1,9 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Model</h2>
+
+@Html.React("VideosFilters", new { hello = Model })
