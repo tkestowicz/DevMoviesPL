@@ -1,17 +1,27 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-</head>
-<body>
-    @RenderBody()
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+        @Scripts.Render("~/bundles/jquery")
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/main")
+    </head>
+    <body class="container">
+        <div class="page-header" style="margin-bottom: 5px;">
+            <h1 class="text-info">Devs stuff</h1>
+        </div>
+        @Html.Partial("Menu")
+        @RenderBody()
+        
+        <footer class="row">
+            <p class="pull-right">Realizacja: <a href="http://tymoteuszkestowicz.com">Tymoteusz Kęstowicz</a></p>
+            <p>The Developers Stuff &copy; 2014</p>
+        </footer>
+       
+        @RenderSection("scripts", required: false)
 
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
-    @Scripts.Render("~/bundles/main")
-    @Html.ReactInitJavaScript()
-</body>
+        @Html.ReactInitJavaScript()
+    </body>
 </html>

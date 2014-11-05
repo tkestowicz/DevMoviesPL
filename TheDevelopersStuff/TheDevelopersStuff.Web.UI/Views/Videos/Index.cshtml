@@ -1,9 +1,258 @@
 ﻿@model string
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Biblioteka filmów";
 }
 
-<h2>@Model</h2>
+@*@Html.React("VideosFilters", new { hello = Model })*@
 
-@Html.React("VideosFilters", new { hello = Model })
+<section class="row">
+    <aside class="col-md-3 col-lg-3">
+        <h3 class="text-primary">Filtry</h3>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Kanał</h3>
+            </div>
+            <div class="panel-body">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="options">
+                        dotNetConf
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="options">
+                        dotNetConfPL
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="options">
+                        NDC Oslo Conferences
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="options">
+                        tretton37
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Rok</h3>
+            </div>
+            <div class="panel-body">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="options">
+                        2014
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="options">
+                        2013
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="options">
+                        2012
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="options">
+                        2011
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary filters">
+            <div class="panel-heading">
+                <h3 class="panel-title">Tagi</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon bg-root"><span class="glyphicon glyphicon-tag"></span></span>
+                        <input type="text" class="form-control" placeholder="Wpisz tag">
+                    </div>
+                </div>
+                <div>
+                    <span class="label label-primary pull-left">Default <span class="delete">&times;</span></span>
+                    <span class="label label-primary pull-left">C# <span class="delete">&times;</span></span>
+                    <span class="label label-primary pull-left">ndcoslo <span class="delete">&times;</span></span>
+                    <span class="label label-primary pull-left">Default <span class="delete">&times;</span></span>
+                    <span class="label label-primary pull-left">Default <span class="delete">&times;</span></span>
+                    <span class="label label-primary pull-left">Default <span class="delete">&times;</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <button class="btn btn-primary btn-group-lg"><span class="glyphicon glyphicon-ok"></span> Zastosuj filtry</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-danger btn-group-lg"><span class="glyphicon glyphicon-remove"></span> Usuń filtry</button>
+            </div>
+        </div>
+    </aside>
+    <section class="col-md-9 col-lg-9">
+        <div class="row">
+            <h3 class="pull-left text-primary col-sm-3 col-md-3 col-lg-3">Filmy</h3>
+            <div class="pull-right  col-sm-4 col-md-4 col-lg-4 text-right order">
+                Kolejność: 
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                        data publikacji <span class="glyphicon glyphicon-sort-by-attributes-alt"></span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">data publikacji <span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
+                        <li><a href="#" class="active">data publikacji <span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">nazwa kanału <span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
+                        <li><a href="#">nazwa kanału <span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">tytuł <span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
+                        <li><a href="#">tytuł <span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">najpopularniejsze <span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
+                        <li><a href="#">najpopularniejsze <span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="//player.vimeo.com/video/110100738" title="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                    <div class="caption">
+                        <h4><a href="#">Luke Wroblewski - It’s a Write/Read (Mobile) Web</a></h4>
+                        <p data-toggle="modal" data-target="#myModal">On the surface, content is king online. But digging deeper into the underbelly of the web reveals a complex ecosystem of ...</p>
+                        <p>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">C#</span>
+                            <span class="label label-info">ndcoslo</span>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">Default</span>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-thumbs-down"></span>8</p>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-thumbs-up"></span>15 </p>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-eye-open"></span>124</p>
+                        <p style="margin-left: 10px;"><a href="">dotnetconf</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="//player.vimeo.com/video/110100738" title="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Pi3bc9lS3rg" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                    <div class="caption">
+                        <h4><a href="#">Luke Wroblewski - It’s a Write/Read (Mobile) Web</a></h4>
+                        <p data-toggle="modal" data-target="#myModal">On the surface, content is king online. But digging deeper into the underbelly of the web reveals a complex ecosystem of ...</p>
+                        <p>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">C#</span>
+                            <span class="label label-info">ndcoslo</span>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">Default</span>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-thumbs-down"></span>8</p>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-thumbs-up"></span>15 </p>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-eye-open"></span>124</p>
+                        <p style="margin-left: 10px;"><a href="">dotnetconf</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="//player.vimeo.com/video/110100738" title="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                    <div class="caption">
+                        <h4><a href="#">Luke Wroblewski - It’s a Write/Read (Mobile) Web</a></h4>
+                        <p data-toggle="modal" data-target="#myModal">On the surface, content is king online. But digging deeper into the underbelly of the web reveals a complex ecosystem of ...</p>
+                        <p>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">C#</span>
+                            <span class="label label-info">ndcoslo</span>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">Default</span>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-thumbs-down"></span>8</p>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-thumbs-up"></span>15 </p>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-eye-open"></span>124</p>
+                        <p style="margin-left: 10px;"><a href="">dotnetconf</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="//player.vimeo.com/video/110100738" title="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                    <div class="caption">
+                        <h4><a href="#">Luke Wroblewski - It’s a Write/Read (Mobile) Web</a></h4>
+                        <p data-toggle="modal" data-target="#myModal">On the surface, content is king online. But digging deeper into the underbelly of the web reveals a complex ecosystem of ...</p>
+                        <p>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">C#</span>
+                            <span class="label label-info">ndcoslo</span>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">Default</span>
+                            <span class="label label-info">Default</span>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-thumbs-down"></span>8</p>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-thumbs-up"></span>15 </p>
+                        <p class="pull-right" style="margin-right: 10px;"><span class="glyphicon glyphicon-eye-open"></span>124</p>
+                        <p style="margin-left: 10px;"><a href="">dotnetconf</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <ul class="pagination">
+                <li class="disabled"><a href="#">«</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">»</a></li>
+            </ul>
+        </div>
+    </section>
+</section>
+
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary">Luke Wroblewski - It’s a Write/Read (Mobile) Web</h4>
+            </div>
+            <div class="modal-body">
+                <p>On the surface, content is king online. But digging deeper into the underbelly of the web reveals a complex ecosystem of communication and contribution that shapes the web and how we interact with it. What lessons can we learn from the web’s inner workings as we move to a mobile-driven, multi-device internet? Luke will not only lift the covers on where we need to focus our efforts but share lots of practical advice on how as well.</p>
+            </div>
+        </div>
+    </div>
+</div>

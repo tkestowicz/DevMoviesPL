@@ -1,0 +1,41 @@
+﻿label,
+.radio label,
+.checkbox label{
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.input-group-addon.bg-primary {
+    background-color: #df691a !important;
+    border-color: #df691a !important;
+}
+
+.bg-default {
+    background-color: #4e5d6c;
+}
+
+.label-root,
+.bg-root,
+.btn-root {
+    background-color: #2b3e50;
+}
+
+.filters .label {
+    font-size: 14px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.order {
+    margin-top: 30px;
+    font-size: 12px;
+}
+
+.order .dropdown-menu {
+    border: 1px solid #2b3e50;
+}
+
+footer {
+    border-top: 1px solid #4e5d6c;
+    font-size: 12px;
+}

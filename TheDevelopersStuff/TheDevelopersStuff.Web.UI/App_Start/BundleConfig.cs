@@ -11,9 +11,13 @@ namespace TheDevelopersStuff.Web.UI
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/libs/jquery-{version}.js",
+                        "~/Scripts/libs/bootstrap.js",
                         "~/Scripts/libs/react-0.12.0.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/bootstrap.css",
+                "~/Content/site.css"
+                ));
 
             bundles.Add(new JsxBundle("~/bundles/main").Include(
                 "~/Scripts/components/filters.jsx"
