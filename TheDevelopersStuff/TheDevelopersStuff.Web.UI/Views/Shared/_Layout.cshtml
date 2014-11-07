@@ -8,16 +8,18 @@
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/main")
     </head>
-    <body class="container">
+    <body class="container-fluid">
         <div class="page-header" style="margin-bottom: 5px;">
-            <h1 class="text-info">Devs stuff</h1>
+            <h1 class="text-info">Dev stuff</h1>
         </div>
         @Html.Partial("Menu")
         @RenderBody()
         
         <footer class="row">
-            <p class="pull-right">Realizacja: <a href="http://tymoteuszkestowicz.com">Tymoteusz Kęstowicz</a></p>
-            <p>The Developers Stuff &copy; 2014</p>
+            <div class="col-xs-12">
+                <p class="pull-right">Realizacja: <a href="http://tymoteuszkestowicz.com">Tymoteusz Kęstowicz</a></p>
+                <p>The Developers Stuff &copy; 2014</p>
+            </div>
         </footer>
        
         @RenderSection("scripts", required: false)

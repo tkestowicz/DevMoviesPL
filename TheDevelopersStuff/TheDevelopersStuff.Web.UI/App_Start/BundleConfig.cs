@@ -21,6 +21,7 @@ namespace TheDevelopersStuff.Web.UI
 
             bundles.Add(new JsxBundle("~/bundles/main").Include(
                 "~/Scripts/components/filters.jsx"
+                //"~/Scripts/controls/autocomplete.jsx"
                 ));
         }
     }
