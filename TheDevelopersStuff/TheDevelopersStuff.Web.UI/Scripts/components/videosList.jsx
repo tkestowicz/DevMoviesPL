@@ -93,11 +93,65 @@
 
  });
 
-var VideosPanel = React.createClass({
+var Pagination = React.createClass({
+
+
+	goTo: function(event){
+
+		var page = $(event.target).data().page;
+
+		event.preventDefault();
+
+		if(page === 0 || page === this.props.currentSettings.NumberOfPages + 1)
+			return;
+
+		$('#'+this.props.componentName)
+		.trigger('changePage', { page: page });
+	},
 
 	render: function() {
+
+		var pages = [],
+			firstPage = (function(self){
+				var disabled = (self.props.currentSettings.Page === 1)
+								? 'disabled'
+								: '';
+
+				return <div><li className={disabled}><a href="#" data-page={self.props.currentSettings.Page-1} onClick={self.goTo}>«</a></li></div>;
+			})(this),
+			lastPage = (function(self){
+				var last = self.props.currentSettings.NumberOfPages,
+					disabled = (self.props.currentSettings.Page === last)
+								? 'disabled'
+								: '';
+
+				return <div><li className={disabled}><a href="#" data-page={self.props.currentSettings.Page+1} onClick={self.goTo}>»</a></li></div>;
+			})(this);
+
+		for (var i = this.props.currentSettings.Page, 
+				stop = this.props.currentSettings.Page + 5,
+				first = 1, 
+				last = this.props.currentSettings.NumberOfPages; i < stop; i++) {
+			
+			var active = (i === this.props.currentSettings.Page)
+						? 'active'
+						: '';
+
+			pages.push(<div>
+							<li className={active}><a href="#" data-page={i} onClick={this.goTo}>{i}</a></li>
+						</div>);
+
+		};
+
+		pages.splice(0, 0, firstPage);
+		pages.push(lastPage);
+
 		return (
-			<div />
+			<div id={this.props.componentName} className="text-center">				
+	            <ul className="pagination">
+	            	{pages}	                
+	            </ul>
+	        </div>
 		);
 	}
 

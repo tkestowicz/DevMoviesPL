@@ -19,8 +19,14 @@
             descending = OrderDirectionEnum.Descending
         } 
     })
-
 </div>
+
+@Html.React("Pagination", new
+{
+    componentName = ViewBag.VideosPaginationComponentName,
+    currentSettings = Model.Query.Pagination
+})
+
 <script type="text/javascript">
     $(function () {
         $('#@Html.Id(ViewBag.VideosFiltersComponentName as string)').on("filter", function (event, settings) {
@@ -46,6 +52,10 @@
     });
 
     $('#@Html.Id(ViewBag.VideosOrderByComponentName as string)').on("changeOrder", function(event, settings) {
+        console.log(settings);
+    });
+
+    $('#@Html.Id(ViewBag.VideosPaginationComponentName as string)').on("changePage", function (event, settings) {
         console.log(settings);
     });
 </script>
