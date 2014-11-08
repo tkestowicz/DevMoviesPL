@@ -219,12 +219,23 @@ var Pagination = React.createClass({
 				return <div><li className={disabled}><a href="#" data-page={self.props.currentSettings.Page+1} onClick={self.goTo}>»</a></li></div>;
 			})(this);
 
-		for (var i = this.props.currentSettings.Page, 
-				stop = this.props.currentSettings.Page + 5,
-				first = 1, 
-				last = this.props.currentSettings.NumberOfPages; i < stop; i++) {
+		for (var current = this.props.currentSettings.Page,
+				all = this.props.currentSettings.NumberOfPages,
+				paginationSize = this.props.size,
+				toSubtract = (current%paginationSize === 0)
+					? 1
+					: current%paginationSize,
+				i = (current > paginationSize) 
+					? current - toSubtract 
+					: 1, 
+				last = all,
+				stop = (i + paginationSize > last) 
+					? last + 1
+					: i + paginationSize; 
+
+					i < stop; i++) {
 			
-			var active = (i === this.props.currentSettings.Page)
+			var active = (i === current)
 						? 'active'
 						: '';
 

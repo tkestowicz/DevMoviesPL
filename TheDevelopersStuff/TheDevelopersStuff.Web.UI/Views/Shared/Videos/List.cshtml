@@ -29,5 +29,6 @@
 @Html.React("Pagination", new
 {
     componentName = ViewBag.VideosPaginationComponentName,
-    currentSettings = Model.Query.Pagination
+    currentSettings = Model.Query.Pagination,
+    size = 5
 })
