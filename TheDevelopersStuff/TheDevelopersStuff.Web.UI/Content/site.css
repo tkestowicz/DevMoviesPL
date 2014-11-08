@@ -46,17 +46,46 @@ footer {
     font-size: 12px;
 }
 
-@media (max-width: 1750px) {
-    .filters.buttons {
-        width: 100%;
-    }
+.dropdown-menu > div > li > a {
+  font-size: 11px;
+  line-height: 22px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
-@media (min-width: 1750px) {
-    .filters.buttons {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-        border-collapse: separate;
-    }
+.dropdown-menu > div > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #98978b;
+  white-space: nowrap;
+}
+.dropdown-menu > div > li > a:hover,
+.dropdown-menu > div > li > a:focus {
+  text-decoration: none;
+  color: #98978b;
+  background-color: #f8f5f0;
+}
+.dropdown-menu > div > .active > a,
+.dropdown-menu > div > .active > a:hover,
+.dropdown-menu > div > .active > a:focus {
+  color: #98978b;
+  text-decoration: none;
+  outline: 0;
+  background-color: #f8f5f0;
+}
+.dropdown-menu > div > .disabled > a,
+.dropdown-menu > div > .disabled > a:hover,
+.dropdown-menu > div > .disabled > a:focus {
+  color: #dfd7ca;
+}
+.dropdown-menu > div > .disabled > a:hover,
+.dropdown-menu > div > .disabled > a:focus {
+  text-decoration: none;
+  background-color: transparent;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  cursor: not-allowed;
 }
