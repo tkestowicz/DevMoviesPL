@@ -30,15 +30,19 @@
     margin: 3px;
 }
 
+.label {
+    margin: 3px;
+}
+
 .order {
     margin-top: 30px;
     font-size: 12px;
 }
 
-    .order .dropdown-menu {
-        border: 1px solid #2b3e50;
-        left: -42px;
-    }
+.order .dropdown-menu {
+    border: 1px solid #2b3e50;
+    left: -42px;
+}
 
 footer {
     margin-top: 15px;
@@ -90,6 +94,14 @@ footer {
   cursor: not-allowed;
 }
 
+[data-toggle="modal"] {
+    cursor: pointer;
+}
+
+.input-group .form-control {
+    z-index: 0;
+}
+
 .pagination > div  > li {
   display: inline;
 }
@@ -130,13 +142,14 @@ footer {
   background-color: #dfd7ca;
   border-color: #dfd7ca;
 }
+
 .pagination > div  > .active > a,
 .pagination > div  > .active > span,
 .pagination > div  > .active > a:hover,
 .pagination > div  > .active > span:hover,
 .pagination > div  > .active > a:focus,
 .pagination > div  > .active > span:focus {
-  z-index: 2;
+  z-index: 0;
   color: #8e8c84;
   background-color: #dfd7ca;
   border-color: #dfd7ca;

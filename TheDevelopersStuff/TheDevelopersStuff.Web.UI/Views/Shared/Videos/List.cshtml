@@ -20,6 +20,11 @@
         } 
     })
 </div>
+@Html.React("VideosList", new
+{
+    videos = Model.Videos,
+    captionLength = 180
+})
 
 @Html.React("Pagination", new
 {

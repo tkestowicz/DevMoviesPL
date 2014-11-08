@@ -86,8 +86,99 @@
  var VideosList = React.createClass({
 
  	render: function(){
+
+ 		var self = this,
+ 			footerStyle = {
+ 			'margin-left': '10px'
+ 			},
+ 			lastElement = {
+ 				'margin-left': '10px',
+ 				'margin-right': '5px'
+ 			},
+ 			shortenCaption = function(caption){
+
+ 				if(caption.length > self.props.captionLength)
+ 					return caption.substring(0, self.props.captionLength) + ' ...';
+
+ 				return caption;
+ 			},
+ 			prepareModal = function(video){
+ 				return (
+ 					<div className="modal fade bs-example-modal-lg" id={video.Id} tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					    <div className="modal-dialog">
+					        <div className="modal-content">
+					            <div className="modal-header">
+					                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+					                <h4 className="modal-title text-primary">{video.Title}</h4>
+					            </div>
+					            <div className="modal-body">
+					                <p>{video.Description}</p>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+ 					);
+ 			},
+ 			player = function(video){
+
+ 				if(video.Url.toLowerCase().indexOf("vimeo") !== -1){
+ 					var link = '//player.vimeo.com/video/'+video.Id;
+ 					return (<div className="embed-responsive embed-responsive-16by9">
+ 								<iframe className="embed-responsive-item" src={link} title="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+							</div>);
+ 				}
+ 				else if(video.Url.toLowerCase().indexOf("youtube") !== -1){
+ 					var link = 'https://www.youtube.com/embed/'+video.Id;
+ 					return (<div className="embed-responsive embed-responsive-16by9">
+ 								<iframe className="embed-responsive-item" src={link} webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+							</div>);
+ 				}
+
+ 				return <div></div>;
+
+ 			},
+ 			videos = this.props.videos.map(function(video){
+
+ 				var caption = shortenCaption(video.Description),
+ 					playerFrame = player(video),
+ 					modalId = '#'+video.Id,
+ 					modal = prepareModal(video),
+ 					tags = video.Tags.map(function(tag){
+
+ 						var containerStyle = {
+ 							'display': 'inline'
+ 						};
+
+ 						return <div style={containerStyle}><span className="label label-info">{tag}</span></div>;
+ 					});
+
+ 				return (
+		 			<div className="col-sm-4 col-lg-3 col-md-4">
+		                <div className="thumbnail">
+		                    {playerFrame}
+		                    <div className="caption">
+		                        <h4><a href={video.Url} title={video.Title}>{video.Title}</a></h4>
+		                        <p data-toggle="modal" data-target={modalId} title={video.Description}>{caption}</p>
+		                        <p>
+		                        	{tags}                        
+		                        </p>
+		                    </div>
+		                    <div>
+		                        <p className="pull-right" style={lastElement}><span className="glyphicon glyphicon-thumbs-down"></span>{video.Dislikes}</p>
+		                        <p className="pull-right" style={footerStyle}><span className="glyphicon glyphicon-thumbs-up"></span>{video.Likes} </p>
+		                        <p className="pull-right" style={footerStyle}><span className="glyphicon glyphicon-eye-open"></span>{video.Views}</p>
+		                        <p style={footerStyle}><a href={video.ChannelInfo.Link} title={video.ChannelInfo.Name}>{video.ChannelInfo.Name}</a></p>
+		                    </div>
+		                </div>
+		                {modal}
+		            </div>
+ 				);
+ 		});
+
  		return (
- 			<div/>
+ 			<div className="row">
+ 				{videos}
+ 			</div>
  			);
  	}
 
