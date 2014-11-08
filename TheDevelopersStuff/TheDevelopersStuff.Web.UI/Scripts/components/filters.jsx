@@ -204,15 +204,12 @@ var VideosFilters = React.createClass({
   	},
 	channelSelected: function(channel){
 		this.setState($.extend(this.state.filters, { ChannelName: channel }));
-		console.log(this.state);
 	},
 	publicationYearSelected: function(year){
 		this.setState($.extend(this.state.filters, { PublicationYear: year }));
-		console.log(this.state);
 	},
 	tagsChanged: function(tags){
 		this.setState($.extend(this.state.filters, { Tags: tags }));
-		console.log(this.state);
 	},
 
 	actionHandler: function(action){
@@ -226,9 +223,7 @@ var VideosFilters = React.createClass({
 		{
 			this.setState($.extend(this.state, { resetState: true }));
 
-			$("#" + this.props.componentName).trigger("filter", {
-				filters: this.state.filters
-			});			
+			$("#" + this.props.componentName).trigger("filter", this.state.filters);			
 		}
 		else if (action === 'clear')
 		{

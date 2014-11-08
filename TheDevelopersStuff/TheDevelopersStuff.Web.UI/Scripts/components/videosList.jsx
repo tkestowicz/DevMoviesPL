@@ -197,7 +197,7 @@ var Pagination = React.createClass({
 			return;
 
 		$('#'+this.props.componentName)
-		.trigger('changePage', { page: page });
+		.trigger('changePage', { Page: page });
 	},
 
 	render: function() {

@@ -14,10 +14,35 @@ namespace TheDevelopersStuff.Web.UI.Controllers
         public FindVideosQuery Query { get; set; }
     }
 
+    public class VideosQuery
+    {
+        public string ChannelName { get; set; }
+        public IEnumerable<string> Tags { get; set; }
+        public int? PublicationYear { get; set; }
+        public int? Page { get; set; }
+        public string PropertyName { get; set; }
+        public OrderDirectionEnum Direction { get; set; }
+    }
+
     public class VideosController : Controller
     {
-        public ActionResult Index(FindVideosQuery query)
+        public ActionResult Index(VideosQuery @params)
         {
+            var query = new FindVideosQuery()
+            {
+                ChannelName = @params.ChannelName,
+                PublicationYear = @params.PublicationYear,
+                Tags = @params.Tags
+            };
+
+            if (string.IsNullOrEmpty(@params.PropertyName) == false)
+            {
+                query.OrderBy.Direction = @params.Direction;
+                query.OrderBy.PropertyName = @params.PropertyName;   
+            }
+
+            query.Pagination.Page = @params.Page ?? 1;
+
             return View("Index", null, new VideosListViewModel
             {
                 Query = query,

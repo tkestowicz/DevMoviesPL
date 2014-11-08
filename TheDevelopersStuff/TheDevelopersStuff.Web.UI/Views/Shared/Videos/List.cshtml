@@ -31,36 +31,3 @@
     componentName = ViewBag.VideosPaginationComponentName,
     currentSettings = Model.Query.Pagination
 })
-
-<script type="text/javascript">
-    $(function () {
-        $('#@Html.Id(ViewBag.VideosFiltersComponentName as string)').on("filter", function (event, settings) {
-                        event.preventDefault();
-
-                        var url = '@Url.Action("Index", "Videos")';
-
-                        location.href = url + '?' + $.param(settings.filters, true);
-
-                        /*  $.ajax({
-                              url: url,
-                              data: settings.filters,
-                              success: function (result) {
-                                  console.log(result);
-                              },
-                             
-                              type: 'get',
-                              traditional: true
-                          }).done(function() {
-                              console.log(arguments);
-                          });*/
-                    });
-    });
-
-    $('#@Html.Id(ViewBag.VideosOrderByComponentName as string)').on("changeOrder", function(event, settings) {
-        console.log(settings);
-    });
-
-    $('#@Html.Id(ViewBag.VideosPaginationComponentName as string)').on("changePage", function (event, settings) {
-        console.log(settings);
-    });
-</script>

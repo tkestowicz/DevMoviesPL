@@ -1,10 +1,23 @@
-﻿@model TheDevelopersStuff.Web.UI.Controllers.VideosListViewModel
+﻿@using System.Web.Script.Serialization
+@model TheDevelopersStuff.Web.UI.Controllers.VideosListViewModel
 
 @{
     ViewBag.Title = "Biblioteka filmów";
     ViewBag.VideosFiltersComponentName = "videos-filters";
     ViewBag.VideosOrderByComponentName = "videos-orderBy";
     ViewBag.VideosPaginationComponentName = "videos-pagination";
+
+    var controllerSettings = new
+    {
+        selectors = new
+        {
+            filters = '#' + ViewBag.VideosFiltersComponentName,
+            orderBy = '#' + ViewBag.VideosOrderByComponentName,
+            pagination = '#' + ViewBag.VideosPaginationComponentName
+        },
+        url = Url.Action("Index", "Videos"),
+        lastQuery = Model.Query
+    };
 }
 
 <section class="row">
@@ -18,4 +31,11 @@
             Html.RenderPartial("Videos/List", Model);
         }        
     </section>
+    <script type="text/javascript">
+        $(function() {
+
+            videosController.init(@Html.Raw(Json.Encode(controllerSettings)));
+
+        });
+    </script>
 </section>
