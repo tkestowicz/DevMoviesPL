@@ -7,26 +7,9 @@ using TheDevelopersStuff.Backend.ViewModels;
 
 namespace TheDevelopersStuff.Web.UI.Controllers
 {
-    public class VideosListViewModel
-    {
-        public List<VideoViewModel> Videos { get; set; }
-        public VideosFiltersViewModel Filters { get; set; }
-        public FindVideosQuery Query { get; set; }
-    }
-
-    public class VideosQuery
-    {
-        public string ChannelName { get; set; }
-        public IEnumerable<string> Tags { get; set; }
-        public int? PublicationYear { get; set; }
-        public int? Page { get; set; }
-        public string PropertyName { get; set; }
-        public OrderDirectionEnum Direction { get; set; }
-    }
-
     public class VideosController : Controller
     {
-        public ActionResult Index(VideosQuery @params)
+        public ActionResult Index(FlattenedVideosQuery @params)
         {
             var query = new FindVideosQuery()
             {

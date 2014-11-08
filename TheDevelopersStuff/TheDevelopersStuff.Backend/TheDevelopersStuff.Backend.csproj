@@ -129,6 +129,7 @@
     <Compile Include="DataSources\DTO\ChannelDTO.cs" />
     <Compile Include="ViewModels\OrderDirectionEnum.cs" />
     <Compile Include="ViewModels\VideosFiltersViewModel.cs" />
+    <Compile Include="ViewModels\VideosListViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
