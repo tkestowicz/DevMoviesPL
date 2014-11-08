@@ -41,7 +41,8 @@
 
 .order .dropdown-menu {
     border: 1px solid #2b3e50;
-    left: -42px;
+    right: 0;
+    left: initial;
 }
 
 footer {
