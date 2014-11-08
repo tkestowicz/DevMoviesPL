@@ -20,7 +20,10 @@ namespace TheDevelopersStuff.Backend.Queries
             get {
                 try
                 {
-                    return (int) Math.Ceiling((decimal) 50/PerPage);
+                    if (NumberOfRecords == 0) 
+                        return 1;
+
+                    return (int) Math.Ceiling((decimal) NumberOfRecords/PerPage);
                 }
                 catch (DivideByZeroException)
                 {
