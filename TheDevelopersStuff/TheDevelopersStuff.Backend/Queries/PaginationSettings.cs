@@ -1,3 +1,5 @@
+using System;
+
 namespace TheDevelopersStuff.Backend.Queries
 {
     public class PaginationSettings
@@ -8,7 +10,23 @@ namespace TheDevelopersStuff.Backend.Queries
             PerPage = defaultPerPage;
         }
 
+        internal int NumberOfRecords { get; set; }
+
         public int Page { get; set; }
         public int PerPage { get; set; }
+
+        public int NumberOfPages
+        {
+            get {
+                try
+                {
+                    return (int) Math.Ceiling((decimal) NumberOfRecords/PerPage);
+                }
+                catch (DivideByZeroException)
+                {
+                    return 0;
+                }
+            }
+        }
     }
 }

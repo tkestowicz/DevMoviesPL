@@ -137,20 +137,25 @@ namespace TheDevelopersStuff.Tests.Integration
         [InlineAutoData(3, 1)]
         public void Query__page_and_per_page_filters_set__returns_appropriate_number_of_records(int page, int perPage)
         {
-            var actualResult = create_handler().Handle(new FindVideosQuery()
+            var query = new FindVideosQuery()
             {
                 Pagination = new PaginationSettings()
                 {
                     Page = page,
                     PerPage = perPage
                 }
-            });
+            };
+
+            var actualResult = create_handler().Handle(query);
+
+            var expectedPages = (int)Math.Ceiling((decimal)videos.Count() / perPage);
 
             var expectedVideos = videos
                 .Skip((page - 1)*perPage)
                 .Take(perPage);
 
             actualResult.ShouldEqual(expectedVideos.TransformToExpectedViewModel(channels));
+            query.Pagination.NumberOfPages.ShouldEqual(expectedPages);
         }
 
         [Fact]
@@ -159,13 +164,18 @@ namespace TheDevelopersStuff.Tests.Integration
             const int defaultPage = 1;
             const int defaultPerPage = 10;
 
-            var actualResult = create_handler().Handle(new FindVideosQuery());
+            var query = new FindVideosQuery();
+
+            var actualResult = create_handler().Handle(query);
+
+            var expectedPages = (int)Math.Ceiling((decimal)videos.Count()/defaultPerPage);
 
             var expectedVideos = videos
                 .Skip((defaultPage - 1) * defaultPerPage)
                 .Take(defaultPerPage);
 
             actualResult.ShouldEqual(expectedVideos.TransformToExpectedViewModel(channels));
+            query.Pagination.NumberOfPages.ShouldEqual(expectedPages);
         }
 
         [Fact]

@@ -77,8 +77,12 @@ namespace TheDevelopersStuff.Backend.Queries
                 .Distinct()
                 .ToArray();
 
-            return videos
-                .Where(v => channelsToFind.Contains(v.ChannelId))
+            var partialResult = videos
+                .Where(v => channelsToFind.Contains(v.ChannelId));
+
+            query.Pagination.NumberOfRecords = partialResult.Count();
+
+            return partialResult
                 .Skip((query.Pagination.Page - 1)*query.Pagination.PerPage)
                 .Take(query.Pagination.PerPage)
                 .ToViewModel(channels)
