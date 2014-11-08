@@ -23,7 +23,9 @@
                 Tags: settings.lastQuery.Tags,
             };
 
-            $(settings.selectors.filters).on("filter", executeAction);
+            $(settings.selectors.filters)
+                .on("filter", executeAction)
+                .on("clear", executeAction);
             $(settings.selectors.orderBy).on("changeOrder", executeAction);
             $(settings.selectors.pagination).on("changePage", executeAction);
 

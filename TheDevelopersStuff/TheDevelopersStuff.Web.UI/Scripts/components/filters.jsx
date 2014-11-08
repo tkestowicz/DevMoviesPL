@@ -105,7 +105,6 @@ var PublicationYearsFilters = React.createClass({
 var TagsFilters = React.createClass({
 
 	getInitialState: function() {
-		console.log(this.props);
 	    return { tags: this.props.selected || [] };
   	},
 
@@ -227,7 +226,9 @@ var VideosFilters = React.createClass({
 		}
 		else if (action === 'clear')
 		{
-			this.setState(this.getInitialState());
+			this.setState({ resetState: false, filters: {}});
+
+			$("#" + this.props.componentName).trigger("clear", { ChannelName: null, PublicationYear: null, Tags: [] });	
 		}
 	},
 	render: function(){
