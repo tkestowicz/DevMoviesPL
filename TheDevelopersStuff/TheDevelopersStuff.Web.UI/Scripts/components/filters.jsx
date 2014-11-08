@@ -117,13 +117,15 @@ var TagsFilters = React.createClass({
 
   	approved: function(event){
   		var tags = this.state.tags,
-  			value = event.target.value;
+  			value = event.target.value,
+  			selectedTag = this.props.tags.filter(function(tag){
+ 				return value && tag.toLowerCase() === value.toLowerCase();
+ 			});
 
   		if(event.key === 'Enter' 
-  			&& value 
-  			&& this.props.tags.indexOf(value) !== -1){
+  			&& selectedTag.length === 1){
   			
-  				tags.push(value);
+  				tags.push(selectedTag[0]);
   				this.setState({ tags: tags });
 
   				this.props.onTagsChanged(tags);
