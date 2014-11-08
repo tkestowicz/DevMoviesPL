@@ -1,38 +1,21 @@
-﻿@model string
+﻿@model TheDevelopersStuff.Web.UI.Controllers.VideosListViewModel
 
 @{
     ViewBag.Title = "Biblioteka filmów";
+    ViewBag.VideosFiltersComponentName = "videos-filters";
 }
 
 <section class="row">
     <aside class="col-md-3 col-lg-2">
-        @{ Html.RenderAction("GetFilters", "Videos"); }
+        @{
+            Html.RenderPartial("Videos/Filters", Model.Filters);
+        }
     </aside>
     <section class="col-md-9 col-lg-10">
-        <div class="row">
-            <h3 class="pull-left text-primary col-sm-3 col-md-3 col-lg-3">Filmy</h3>
-            <div class="pull-right  col-sm-4 col-md-4 col-lg-4 text-right order">
-                Kolejność: 
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
-                        data publikacji <span class="glyphicon glyphicon-sort-by-attributes-alt"></span> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">data publikacji <span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
-                        <li><a href="#" class="active">data publikacji <span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">nazwa kanału <span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
-                        <li><a href="#">nazwa kanału <span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">tytuł <span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
-                        <li><a href="#">tytuł <span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">najpopularniejsze <span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
-                        <li><a href="#">najpopularniejsze <span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>@*
+        @{
+            Html.RenderPartial("Videos/List", Model);
+        }        
+        @*
         <div class="row">
             <div class="col-sm-4 col-lg-3 col-md-4">
                 <div class="thumbnail">

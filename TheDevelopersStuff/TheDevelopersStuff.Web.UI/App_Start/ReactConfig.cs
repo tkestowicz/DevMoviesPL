@@ -17,7 +17,8 @@ namespace TheDevelopersStuff.Web.UI
 			// your components as well as all of their dependencies.
 			// See http://reactjs.net/ for more information. Example:
 			ReactSiteConfiguration.Configuration
-                .AddScript("~/Scripts/components/filters.jsx");
+                .AddScript("~/Scripts/components/filters.jsx")
+                .AddScript("~/Scripts/components/videosList.jsx");
 		}
 	}
 }

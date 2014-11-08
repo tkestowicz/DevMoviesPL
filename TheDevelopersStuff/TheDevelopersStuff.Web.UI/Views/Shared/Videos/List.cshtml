@@ -1,0 +1,31 @@
+﻿@model dynamic
+
+<div class="row">
+    <h3 class="pull-left text-primary col-sm-3 col-md-3 col-lg-3">Filmy</h3>
+    @Html.React("VideosOrder", new { currentSettings = Model.Query.OrderBy })
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#@Html.Id(ViewBag.VideosFiltersComponentName as string)').on("filter", function (event, settings) {
+                        event.preventDefault();
+
+                        var url = '@Url.Action("Index", "Videos")';
+
+                        location.href = url + '?' + $.param(settings.filters, true);
+
+                        /*  $.ajax({
+                              url: url,
+                              data: settings.filters,
+                              success: function (result) {
+                                  console.log(result);
+                              },
+                             
+                              type: 'get',
+                              traditional: true
+                          }).done(function() {
+                              console.log(arguments);
+                          });*/
+                    });
+                });
+</script>

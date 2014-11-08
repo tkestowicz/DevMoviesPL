@@ -1,8 +1,14 @@
 ﻿
 var ChannelFilters = React.createClass({
 
+	getInitialState: function(){
+		return {
+			initial: this.props.selected
+		};
+	},
+
 	channelSelected: function(event){
-		this.setState({ current: event.target });		
+		this.setState({ initial: event.target.value, current: event.target });		
 		this.props.onChannelSelected(event.target.value);
 	},
 
@@ -21,10 +27,11 @@ var ChannelFilters = React.createClass({
 	render: function(){
 
 		var channels = this.props.channels.map(function(channel){
+				var checked = this.state.initial === channel;
 
 			return (<div className="radio">
 							<label>
-								<input type="radio" name="channel" value={channel} onChange={this.channelSelected} />
+								<input type="radio" name="channel" value={channel} checked={checked} onChange={this.channelSelected} />
 								{channel}
 							</label>
 						</div>);
@@ -43,10 +50,16 @@ var ChannelFilters = React.createClass({
 
 var PublicationYearsFilters = React.createClass({
 
+	getInitialState: function(){
+		return {
+			initial: this.props.selected
+		};
+	},
+
 	yearSelected: function(event){
 		var year = parseInt(event.target.value);
 
-		this.setState({ current: event.target });
+		this.setState({ initial: year, current: event.target });	
 		this.props.onPublicationYearSelected(year);
 	},
 
@@ -68,9 +81,11 @@ var PublicationYearsFilters = React.createClass({
 
 		var publicationYears = this.props.years.map(function(year){
 
+			var checked = this.state.initial === year;
+
 			return (<div className="radio">
 							<label>
-								<input type="radio" name="publicationYear" value={year} onChange={this.yearSelected} />
+								<input type="radio" name="publicationYear" value={year} checked={checked} onChange={this.yearSelected} />
 								{year}
 							</label>
 						</div>);
@@ -90,7 +105,8 @@ var PublicationYearsFilters = React.createClass({
 var TagsFilters = React.createClass({
 
 	getInitialState: function() {
-	    return { tags: [] };
+		console.log(this.props);
+	    return { tags: this.props.selected || [] };
   	},
 
   	componentWillReceiveProps: function(nextProps){
@@ -132,6 +148,7 @@ var TagsFilters = React.createClass({
 
 		var self = this,
 			tags = this.state.tags.map(function(tag){
+
 			return (<span className="label label-primary pull-left" onClick={self.remove}>{tag} <span className="delete">&times;</span></span>);
 		});
 
@@ -182,7 +199,7 @@ var VideosFilters = React.createClass({
 	getInitialState: function() {
 	    return {
 	    	resetState: false,
-	    	filters: {}
+	    	filters: this.props.data.Current
 	    };
   	},
 	channelSelected: function(channel){
@@ -208,9 +225,10 @@ var VideosFilters = React.createClass({
 		if(action === 'filter' && hasAnyFilters())
 		{
 			this.setState($.extend(this.state, { resetState: true }));
-			$.get(this.props.url, this.state.filters, function(result){
-				console.log(result);
-			});
+
+			$("#" + this.props.componentName).trigger("filter", {
+				filters: this.state.filters
+			});			
 		}
 		else if (action === 'clear')
 		{
@@ -220,9 +238,9 @@ var VideosFilters = React.createClass({
 	render: function(){
 		
 		return (<div>
-					<ChannelFilters onChannelSelected={this.channelSelected} resetState={this.state.resetState} channels={this.props.data.Channels} />
-					<PublicationYearsFilters onPublicationYearSelected={this.publicationYearSelected} resetState={this.state.resetState} years={this.props.data.PublicationYears} />
-					<TagsFilters onTagsChanged={this.tagsChanged} resetState={this.state.resetState} tags={this.props.data.Tags} />
+					<ChannelFilters selected={this.props.data.Current.ChannelName} onChannelSelected={this.channelSelected} resetState={this.state.resetState} channels={this.props.data.Channels} />
+					<PublicationYearsFilters selected={this.props.data.Current.PublicationYear} onPublicationYearSelected={this.publicationYearSelected} resetState={this.state.resetState} years={this.props.data.PublicationYears} />
+					<TagsFilters selected={this.props.data.Current.Tags} onTagsChanged={this.tagsChanged} resetState={this.state.resetState} tags={this.props.data.Tags} />
 					<FiltersButtons onAction={this.actionHandler} />
 				</div>);
 	}

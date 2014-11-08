@@ -6,26 +6,32 @@ using TheDevelopersStuff.Backend.ViewModels;
 
 namespace TheDevelopersStuff.Web.UI.Controllers
 {
+    public class VideosListViewModel
+    {
+        public List<VideoViewModel> Videos { get; set; }
+        public VideosFiltersViewModel Filters { get; set; }
+        public FindVideosQuery Query { get; set; }
+    }
+
     public class VideosController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(FindVideosQuery query)
         {
-            return View("Index", null, "It Works");
-        }
-
-        public ActionResult GetFilters()
-        {
-            return PartialView("Videos/Filters", new VideosFiltersViewModel()
+            return View("Index", null, new VideosListViewModel
             {
-                Channels = new List<string>()
+                Query = query,
+                Videos = new List<VideoViewModel>(),
+                Filters = new VideosFiltersViewModel()
+                {
+                    Channels = new List<string>()
                 {
                     "dotNetConf",
                     "dotNetConfPL",
                     "NDC Oslo Conferences",
                     "tretton37"
                 },
-                PublicationYears = Enumerable.Range(2009, 5).ToList(),
-                Tags = new List<string>()
+                    PublicationYears = Enumerable.Range(2009, 5).ToList(),
+                    Tags = new List<string>()
                 {
                     "C#",
                     ".NET",
@@ -34,13 +40,16 @@ namespace TheDevelopersStuff.Web.UI.Controllers
                     "agile",
                     "software development",
                     "software architecture"
+                },
+                    Current = new VideosFiltersViewModel.SelectedFiltersViewModel
+                    {
+                        ChannelName = query.ChannelName,
+                        PublicationYear = query.PublicationYear,
+                        Tags = query.Tags
+                    }
                 }
             });
         }
-
-        public ActionResult Query(FindVideosQuery query)
-        {
-            return Json(query, JsonRequestBehavior.AllowGet);
-        }
     }
+
 }

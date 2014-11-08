@@ -159,6 +159,7 @@
     <Content Include="readme.txt" />
     <Content Include="Scripts\components\filters.jsx" />
     <Content Include="Scripts\controls\autocomplete.jsx" />
+    <Content Include="Scripts\components\videosList.jsx" />
     <None Include="Scripts\libs\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
@@ -180,6 +181,7 @@
     <Content Include="Scripts\libs\react-0.12.0.min.js" />
     <Content Include="Views\Shared\Menu.cshtml" />
     <Content Include="Views\Shared\Videos\Filters.cshtml" />
+    <Content Include="Views\Shared\Videos\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
