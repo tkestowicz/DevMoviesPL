@@ -127,6 +127,7 @@
     <Compile Include="Queries\VideosLibraryQueryHandlers.cs" />
     <Compile Include="ViewModels\ChannelInfoViewModel.cs" />
     <Compile Include="DataSources\DTO\ChannelDTO.cs" />
+    <Compile Include="ViewModels\OrderDirectionEnum.cs" />
     <Compile Include="ViewModels\VideosFiltersViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
   </ItemGroup>

@@ -17,7 +17,7 @@ namespace TheDevelopersStuff.Backend.Queries
             OrderBy = new OrderSettings()
             {
                 PropertyName = "PublicationDate",
-                Direction = OrderByDirection.Descending
+                Direction = OrderDirectionEnum.Descending
             };
         }
         public string ChannelName { get; set; }

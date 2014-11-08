@@ -1,4 +1,4 @@
-using MongoDB.Driver.Linq;
+using TheDevelopersStuff.Backend.ViewModels;
 
 namespace TheDevelopersStuff.Backend.Queries
 {
@@ -6,6 +6,6 @@ namespace TheDevelopersStuff.Backend.Queries
     {
         public string PropertyName { get; set; }
 
-        public OrderByDirection Direction { get; set; }
+        public OrderDirectionEnum Direction { get; set; }
     }
 }

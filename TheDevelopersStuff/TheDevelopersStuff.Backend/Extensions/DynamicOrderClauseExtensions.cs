@@ -1,16 +1,16 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using MongoDB.Driver.Linq;
+using TheDevelopersStuff.Backend.ViewModels;
 
 namespace TheDevelopersStuff.Backend.Extensions
 {
     public static class DynamicOrderClauseExtensions
     {
         public static IOrderedQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> source, string orderByProperty,
-            OrderByDirection direction = OrderByDirection.Ascending)
+            OrderDirectionEnum direction = OrderDirectionEnum.Ascending)
         {
-            var command = direction == OrderByDirection.Descending ? "OrderByDescending" : "OrderBy";
+            var command = direction == OrderDirectionEnum.Descending ? "OrderByDescending" : "OrderBy";
 
             var type = typeof(TEntity);
 

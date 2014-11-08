@@ -191,7 +191,7 @@ namespace TheDevelopersStuff.Tests.Integration
             var orderBy = new OrderSettings()
             {
                 PropertyName = "Title",
-                Direction = OrderByDirection.Ascending
+                Direction = OrderDirectionEnum.Ascending
             };
             
             var expectedOrder = videos
@@ -207,7 +207,7 @@ namespace TheDevelopersStuff.Tests.Integration
             var orderBy = new OrderSettings()
                 {
                     PropertyName = "Likes",
-                    Direction = OrderByDirection.Ascending
+                    Direction = OrderDirectionEnum.Ascending
                 };
 
             var expectedOrder = videos
@@ -223,7 +223,7 @@ namespace TheDevelopersStuff.Tests.Integration
             var orderBy = new OrderSettings()
             {
                 PropertyName = "ChannelInfo.Name",
-                Direction = OrderByDirection.Ascending
+                Direction = OrderDirectionEnum.Ascending
             };
 
             var expectedOrder = videos
