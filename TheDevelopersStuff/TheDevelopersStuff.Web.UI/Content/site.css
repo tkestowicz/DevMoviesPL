@@ -5,6 +5,13 @@
     font-weight: 300;
 }
 
+.page-header h1 a,
+.page-header h1 a:hover,
+.page-header h1 a:focus {
+    color: #325d88;
+    text-decoration: none;
+}
+
 .input-group-addon.bg-primary {
     background-color: #df691a !important;
     border-color: #df691a !important;
