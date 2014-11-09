@@ -97,7 +97,7 @@
  			},
  			shortenCaption = function(caption){
 
- 				if(caption.length > self.props.captionLength)
+ 				if(caption && caption.length > self.props.captionLength)
  					return caption.substring(0, self.props.captionLength) + ' ...';
 
  				return caption;

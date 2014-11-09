@@ -83,6 +83,7 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
@@ -110,6 +111,7 @@
     <Compile Include="DataSources\VideosDataSource.cs" />
     <Compile Include="DataSources\DTO\VideoDTO.cs" />
     <Compile Include="Extensions\DynamicOrderClauseExtensions.cs" />
+    <Compile Include="Infrastructure\DatabaseConnectionFactory.cs" />
     <Compile Include="Infrastructure\IQuery.cs" />
     <Compile Include="Infrastructure\IQueryHandler.cs" />
     <Compile Include="Model.cs" />

@@ -46,7 +46,7 @@ namespace TheDevelopersStuff.Backend.Queries
 
             Func<Video, bool> tags = vid =>
             {
-                if (query.Tags.Any())
+                if (query.Tags != null && query.Tags.Any())
                     return vid
                         .Tags
                         .Select(t => t.Name)
