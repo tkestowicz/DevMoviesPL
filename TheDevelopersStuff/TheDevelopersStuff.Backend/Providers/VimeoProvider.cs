@@ -12,9 +12,9 @@ using VideoViewModel = TheDevelopersStuff.Backend.ViewModels.VideoViewModel;
 
 namespace TheDevelopersStuff.Backend.Providers
 {
-    internal class VimeoProvider : IVideoProvider
+    public class VimeoProvider : IVideoProvider
     {
-        internal class VimeoConfig
+        public class VimeoConfig
         {
             internal Uri ApiUri
             {
@@ -180,6 +180,7 @@ namespace TheDevelopersStuff.Backend.Providers
                 foreach (var video in result.data)
                 {
                     string name = video.name;
+                    string uri = video.uri;
                     string pubDate = video.created_time;
 
                     var vm = new VideoViewModel
@@ -190,7 +191,7 @@ namespace TheDevelopersStuff.Backend.Providers
                         PublicationDate = Convert.ToDateTime(pubDate),
                         Likes = video.metadata.connections.likes.total,
                         Views = video.stats.plays,
-                        Id = name.Split('/').Last(),
+                        Id = uri.Split('/').Last(),
                     };
 
                     foreach (var tag in video.tags)

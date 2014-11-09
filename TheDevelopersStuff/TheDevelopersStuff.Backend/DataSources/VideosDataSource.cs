@@ -7,7 +7,7 @@ using TheDevelopersStuff.Backend.ViewModels;
 
 namespace TheDevelopersStuff.Backend.DataSources
 {
-    internal class VideosDataSource : IVideosDataSource
+    public class VideosDataSource : IVideosDataSource
     {
         private readonly IReadOnlyList<IVideoProvider> providers;
 

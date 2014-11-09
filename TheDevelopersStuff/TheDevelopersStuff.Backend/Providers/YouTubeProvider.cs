@@ -11,12 +11,12 @@ using VideoViewModel = TheDevelopersStuff.Backend.ViewModels.VideoViewModel;
 
 namespace TheDevelopersStuff.Backend.Providers
 {
-    internal class YouTubeProvider : IVideoProvider
+    public class YouTubeProvider : IVideoProvider
     {
         private readonly YouTubeConfig config;
         private readonly IReadOnlyCollection<string> channels;
 
-        internal class YouTubeConfig
+        public class YouTubeConfig
         {
             internal string AppKey
             {

@@ -6,7 +6,7 @@ using TheDevelopersStuff.Backend.ViewModels;
 
 namespace TheDevelopersStuff.Backend.Providers
 {
-    internal interface IVideoProvider
+    public interface IVideoProvider
     {
         Task<List<ChannelDTO>> ChannelsData();
     }
