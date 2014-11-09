@@ -5,7 +5,7 @@ This is a web application which aggregates videos from external services (Vimeo 
 
 Technologies & libraries stack:
 
-* ASP.MVC 5,
+* ASP.MVC 4,
 * ReactJS.Net,
 * Bootstrap,
 * jQuery,
