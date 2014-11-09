@@ -146,22 +146,23 @@
  					tags = video.Tags.map(function(tag){
 
  						var containerStyle = {
- 							'display': 'inline'
+ 							'display': 'inline',
+ 							'float': 'left'
  						};
 
  						return <div style={containerStyle}><span className="label label-info">{tag}</span></div>;
  					});
 
  				return (
-		 			<div className="col-sm-4 col-lg-3 col-md-4">
+		 			<div className="video col-sm-4 col-lg-3 col-md-4">
 		                <div className="thumbnail">
 		                    {playerFrame}
 		                    <div className="caption">
 		                        <h4><a href={video.Url} title={video.Title}>{video.Title}</a></h4>
 		                        <p data-toggle="modal" data-target={modalId} title={video.Description}>{caption}</p>
-		                        <p>
+		                        <div className="clearfix">
 		                        	{tags}                        
-		                        </p>
+		                        </div>
 		                    </div>
 		                    <div>
 		                        <p className="pull-right" style={lastElement}><span className="glyphicon glyphicon-thumbs-down"></span>{video.Dislikes}</p>

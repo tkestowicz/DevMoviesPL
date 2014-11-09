@@ -12,6 +12,11 @@
     text-decoration: none;
 }
 
+.video .caption{
+    height: 200px;
+    overflow-y: auto;
+}
+
 .input-group-addon.bg-primary {
     background-color: #df691a !important;
     border-color: #df691a !important;

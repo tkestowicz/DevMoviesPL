@@ -43,6 +43,7 @@ namespace TheDevelopersStuff.Web.UI.Controllers
             }
 
             query.Pagination.Page = @params.Page ?? 1;
+            query.Pagination.PerPage = 12;
 
             var filters = filtersProvider.TakeAvailableFilters();
 
