@@ -1,4 +1,4 @@
-DevStuff
+DevMovies
 ========
 
 This is a web application which aggregates videos from external services (Vimeo and YouTube). Its goal is to have all videos from different IT conferences like NDC, Dev Day in one place.
