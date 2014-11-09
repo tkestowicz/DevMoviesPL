@@ -48,6 +48,7 @@ namespace TheDevelopersStuff.Tests.Integration.Extensions
                     Url = v.Link,
                     Description = v.Description,
                     Dislikes = v.Stats.Dislikes,
+                    Views = v.Stats.Views,
                     Likes = v.Stats.Likes,
                     PublicationDate = v.PublicationDate,
                     ChannelInfo = new ChannelInfoViewModel()

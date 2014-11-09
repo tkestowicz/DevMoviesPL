@@ -83,11 +83,11 @@ namespace TheDevelopersStuff.Backend.Queries
             query.Pagination.NumberOfRecords = partialResult.Count();
 
             return partialResult
-                .Skip((query.Pagination.Page - 1)*query.Pagination.PerPage)
-                .Take(query.Pagination.PerPage)
                 .ToViewModel(channels)
                 .AsQueryable()
                 .OrderBy(query.OrderBy.PropertyName, query.OrderBy.Direction)
+                .Skip((query.Pagination.Page - 1) * query.Pagination.PerPage)
+                .Take(query.Pagination.PerPage)
                 .ToList();
         }
     }

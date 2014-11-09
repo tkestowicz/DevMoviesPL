@@ -181,12 +181,19 @@ namespace TheDevelopersStuff.Tests.Integration
         [Fact]
         public void Query__order_not_set__uses_default_order()
         {
-            var actualResult = create_handler().Handle(new FindVideosQuery());
+            const int pageSize = 4;
+
+            var query = new FindVideosQuery();
+
+            query.Pagination.PerPage = pageSize;
+
+            var actualResult = create_handler().Handle(query);
 
             var expectedOrder = videos
                 .TransformToExpectedViewModel(channels)
                 .OrderByDescending(v => v.PublicationDate)
                 .Select(v => v.Id)
+                .Take(pageSize)
                 .ToArray();
 
             actualResult

@@ -22,6 +22,7 @@ namespace TheDevelopersStuff.Backend.Model
                     Title = v.Title,
                     Url = v.Link,
                     Description = v.Description,
+                    Views = v.Stats.Views,
                     Dislikes = v.Stats.Dislikes,
                     Likes = v.Stats.Likes,
                     PublicationDate = v.PublicationDate,
