@@ -179,3 +179,10 @@ footer {
   border-color: #dfd7ca;
   cursor: not-allowed;
 }
+
+
+.ui-autocomplete {
+    overflow-x: visible;
+    overflow-y: auto;
+    max-height: 300px;
+}

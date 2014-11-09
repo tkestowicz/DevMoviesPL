@@ -119,7 +119,7 @@ var TagsFilters = React.createClass({
   		var tags = this.state.tags,
   			value = event.target.value,
   			selectedTag = this.props.tags.filter(function(tag){
- 				return value && tag.toLowerCase() === value.toLowerCase();
+ 				return value && tag === value;
  			});
 
   		if(event.key === 'Enter' 
@@ -161,7 +161,7 @@ var TagsFilters = React.createClass({
                 <div className="form-group">
                     <div className="input-group">
                         <span className="input-group-addon"><span className="glyphicon glyphicon-tag"></span></span>
-                        <input type="text" className="form-control" placeholder="Wpisz tag" ref="tag" onKeyDown={this.approved} />
+                        <input type="text" id="tags" className="form-control" placeholder="Wpisz tag" ref="tag" onKeyDown={this.approved} />
                     </div>
                 </div>
                 <div>

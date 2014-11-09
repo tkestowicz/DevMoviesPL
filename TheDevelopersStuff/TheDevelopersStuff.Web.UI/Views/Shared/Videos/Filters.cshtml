@@ -5,3 +5,9 @@
 
     @Html.React("VideosFilters", new { data = Model, componentName = ViewBag.VideosFiltersComponentName })
 </div>
+
+<script>
+  $(function() {
+    $( "#tags" ).autocomplete(@Html.Raw(Json.Encode(new { source = @Model.Tags })));
+  });
+  </script>
