@@ -1,7 +1,19 @@
-﻿<nav class="navbar navbar-default" role="navigation">
+﻿@{
+    Func<string, bool, string> isActive = (match, isMain) =>
+    {
+        if (isMain && Request.Url.AbsolutePath.Length == 1)
+            return "active";
+        
+        return Request.Url.PathAndQuery.ToLower().Contains(match.ToLower()) ? "active" : string.Empty;
+    };
+}
+<nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand btn-primary active" href="@Url.Action("Index", "Videos")">Biblioteka filmów</a>
+            <a class="navbar-brand btn-primary @isActive("videos", true)" href="@Url.Action("Index", "Videos")">Biblioteka filmów</a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand btn-primary @isActive("about", false)" href="@Url.Action("Index", "About")">O projekcie</a>
         </div>
     </div>
 </nav>

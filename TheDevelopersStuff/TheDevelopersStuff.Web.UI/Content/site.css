@@ -186,3 +186,12 @@ footer {
     overflow-y: auto;
     max-height: 300px;
 }
+
+.navbar > .container-fluid .navbar-brand {
+    margin-left: 0;
+}
+
+.navbar > .container-fluid .navbar-brand:first-child {
+    margin-left: -15px;
+    margin-right: 15px;
+}
