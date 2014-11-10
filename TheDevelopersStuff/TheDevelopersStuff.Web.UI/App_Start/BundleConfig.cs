@@ -15,9 +15,8 @@ namespace TheDevelopersStuff.Web.UI
                         "~/Scripts/libs/bootstrap.js",
                         "~/Scripts/libs/react-0.12.0.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content/css").IncludeDirectory("~/Content/themes/base", "*.css").Include(
                 "~/Content/bootstrap.css",
-                "~/Content/themes/base/all.css",
                 "~/Content/site.css"
                 ));
 
