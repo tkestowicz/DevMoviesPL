@@ -82,6 +82,9 @@ namespace TheDevelopersStuff.Backend.Queries
 
             query.Pagination.NumberOfRecords = partialResult.Count();
 
+            if (query.Pagination.NumberOfPages < query.Pagination.Page)
+                query.Pagination.Page = 1;
+
             return partialResult
                 .ToViewModel(channels)
                 .AsQueryable()

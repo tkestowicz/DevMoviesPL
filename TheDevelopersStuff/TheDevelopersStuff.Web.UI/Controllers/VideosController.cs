@@ -46,6 +46,7 @@ namespace TheDevelopersStuff.Web.UI.Controllers
             query.Pagination.PerPage = 12;
 
             var filters = filtersProvider.TakeAvailableFilters();
+            var videos = hander.Handle(query);
 
             filters.Current = new VideosFiltersViewModel.SelectedFiltersViewModel
             {
@@ -57,7 +58,7 @@ namespace TheDevelopersStuff.Web.UI.Controllers
             return View("Index", null, new VideosListViewModel
             {
                 Query = query,
-                Videos = hander.Handle(query),
+                Videos = videos,
                 Filters = filters
             });
         }
