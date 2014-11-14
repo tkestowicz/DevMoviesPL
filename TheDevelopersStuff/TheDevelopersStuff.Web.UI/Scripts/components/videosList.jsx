@@ -98,7 +98,13 @@
  			shortenCaption = function(caption){
 
  				if(caption && caption.length > self.props.captionLength)
- 					return caption.substring(0, self.props.captionLength) + ' ...';
+ 				{ 	
+ 					var clipFrom = caption
+ 							.substring(0, self.props.captionLength)
+ 							.lastIndexOf(" ");
+
+ 					return caption.substring(0, clipFrom) + ' ...';
+ 				}
 
  				return caption;
  			},
