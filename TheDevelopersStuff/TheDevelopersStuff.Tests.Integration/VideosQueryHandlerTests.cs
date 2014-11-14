@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
@@ -129,6 +130,37 @@ namespace TheDevelopersStuff.Tests.Integration
                     .Any(t => expectedTags.Contains(t))
                     .ShouldBeTrue("Video does not contain any of expected tags.");
             });
+        }
+
+        [Fact]
+        public void Query__tags_filter_is_not_case_sensitive__returns_matching_results()
+        {
+            var someVideo = videos.First();
+            var tagForTests = new Fixture()
+                .Create<string>()
+                .ToLower();
+
+            var newTags = new []
+            {
+                new Tag()
+                {
+                    Name = tagForTests.ToUpper()
+                }
+            };
+
+            var query = Query<Video>.EQ(v => v.Id, someVideo.Id);
+            var update = Update<Video>.Set(v => v.Tags, newTags);
+
+            db.GetCollection<Video>("Videos").Update(query, update);
+
+            var actualResult = create_handler().Handle(new FindVideosQuery()
+            {
+                Tags = new []{ tagForTests }
+            });
+
+            actualResult
+                .Any(v => v.Id == someVideo.Id)
+                .ShouldBeTrue();
         }
 
         [Theory]
