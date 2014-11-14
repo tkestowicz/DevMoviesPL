@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TheDevelopersStuff.Backend.Infrastructure;
@@ -37,15 +38,16 @@ namespace TheDevelopersStuff.Backend.Queries
             get { return tags; }
             set 
             {
-                if (value == null)
+                try
+                {
+                    tags = value
+                        .Select(t => t.ToLower())
+                        .Distinct();
+                }
+                catch (ArgumentNullException)
                 {
                     tags = null;
-                    return;
                 }
-
-                tags = value
-                    .Select(t => t.ToLower())
-                    .Distinct(); 
             }
         }
 
