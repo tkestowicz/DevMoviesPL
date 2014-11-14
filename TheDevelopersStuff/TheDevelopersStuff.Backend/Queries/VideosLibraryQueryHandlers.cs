@@ -49,7 +49,7 @@ namespace TheDevelopersStuff.Backend.Queries
                 if (query.Tags != null && query.Tags.Any())
                     return vid
                         .Tags
-                        .Select(t => t.Name)
+                        .Select(t => t.Name.ToLower())
                         .ContainsAny(query.Tags);
 
                 return true;

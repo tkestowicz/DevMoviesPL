@@ -98,7 +98,13 @@
  			shortenCaption = function(caption){
 
  				if(caption && caption.length > self.props.captionLength)
- 					return caption.substring(0, self.props.captionLength) + ' ...';
+ 				{ 	
+ 					var clipFrom = caption
+ 							.substring(0, self.props.captionLength)
+ 							.lastIndexOf(" ");
+
+ 					return caption.substring(0, clipFrom) + ' ...';
+ 				}
 
  				return caption;
  			},
@@ -209,7 +215,7 @@ var Pagination = React.createClass({
 								? 'disabled'
 								: '';
 
-				return <div><li className={disabled}><a href="#" data-page={self.props.currentSettings.Page-1} onClick={self.goTo}>«</a></li></div>;
+				return <li className={disabled}><a href="#" data-page={self.props.currentSettings.Page-1} onClick={self.goTo}>«</a></li>;
 			})(this),
 			lastPage = (function(self){
 				var last = self.props.currentSettings.NumberOfPages,
@@ -217,7 +223,7 @@ var Pagination = React.createClass({
 								? 'disabled'
 								: '';
 
-				return <div><li className={disabled}><a href="#" data-page={self.props.currentSettings.Page+1} onClick={self.goTo}>»</a></li></div>;
+				return <li className={disabled}><a href="#" data-page={self.props.currentSettings.Page+1} onClick={self.goTo}>»</a></li>;
 			})(this);
 
 		for (var current = this.props.currentSettings.Page,
@@ -240,9 +246,7 @@ var Pagination = React.createClass({
 						? 'active'
 						: '';
 
-			pages.push(<div>
-							<li className={active}><a href="#" data-page={i} onClick={this.goTo}>{i}</a></li>
-						</div>);
+			pages.push(<li className={active}><a href="#" data-page={i} onClick={this.goTo}>{i}</a></li>);
 
 		};
 

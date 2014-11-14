@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
@@ -26,12 +27,17 @@ namespace TheDevelopersStuff.Tests.Integration
             return new VideosLibraryQueryHandlers(db);
         }
 
+        private static int DefaultNumberOfRecordsPerPage 
+        {
+            get { return new PaginationSettings().PerPage; }
+        }
+
         [Fact]
         public void Query__no_filters_given__returns_corresponding_data()
         {
             var actualResult = create_handler().Handle(new FindVideosQuery());
 
-            actualResult.ShouldEqual(videos.TransformToExpectedViewModel(channels));
+            actualResult.ShouldEqual(videos.TransformToExpectedViewModel(channels, DefaultNumberOfRecordsPerPage));
         }
 
         [Fact]
@@ -39,7 +45,7 @@ namespace TheDevelopersStuff.Tests.Integration
         {
             var actualResult = create_handler().Handle(null);
 
-            actualResult.ShouldEqual(videos.TransformToExpectedViewModel(channels));
+            actualResult.ShouldEqual(videos.TransformToExpectedViewModel(channels, DefaultNumberOfRecordsPerPage));
         }
 
         [Fact]
@@ -131,6 +137,37 @@ namespace TheDevelopersStuff.Tests.Integration
             });
         }
 
+        [Fact]
+        public void Query__tags_filter_is_not_case_sensitive__returns_matching_results()
+        {
+            var someVideo = videos.First();
+            var tagForTests = new Fixture()
+                .Create<string>()
+                .ToLower();
+
+            var newTags = new []
+            {
+                new Tag()
+                {
+                    Name = tagForTests.ToUpper()
+                }
+            };
+
+            var query = Query<Video>.EQ(v => v.Id, someVideo.Id);
+            var update = Update<Video>.Set(v => v.Tags, newTags);
+
+            db.GetCollection<Video>("Videos").Update(query, update);
+
+            var actualResult = create_handler().Handle(new FindVideosQuery()
+            {
+                Tags = new []{ tagForTests }
+            });
+
+            actualResult
+                .Any(v => v.Id == someVideo.Id)
+                .ShouldBeTrue();
+        }
+
         [Theory]
         [InlineData(1, 5)]
         [InlineAutoData(2, 2)]
@@ -154,7 +191,7 @@ namespace TheDevelopersStuff.Tests.Integration
                 .Skip((page - 1)*perPage)
                 .Take(perPage);
 
-            actualResult.ShouldEqual(expectedVideos.TransformToExpectedViewModel(channels));
+            actualResult.ShouldEqual(expectedVideos.TransformToExpectedViewModel(channels, DefaultNumberOfRecordsPerPage));
             query.Pagination.NumberOfPages.ShouldEqual(expectedPages);
         }
 
@@ -162,19 +199,18 @@ namespace TheDevelopersStuff.Tests.Integration
         public void Query__page_and_per_page_not_given__uses_default_settings()
         {
             const int defaultPage = 1;
-            const int defaultPerPage = 10;
-
+            
             var query = new FindVideosQuery();
 
             var actualResult = create_handler().Handle(query);
 
-            var expectedPages = (int)Math.Ceiling((decimal)videos.Count()/defaultPerPage);
+            var expectedPages = (int)Math.Ceiling((decimal)videos.Count()/DefaultNumberOfRecordsPerPage);
 
             var expectedVideos = videos
-                .Skip((defaultPage - 1) * defaultPerPage)
-                .Take(defaultPerPage);
+                .Skip((defaultPage - 1) * DefaultNumberOfRecordsPerPage)
+                .Take(DefaultNumberOfRecordsPerPage);
 
-            actualResult.ShouldEqual(expectedVideos.TransformToExpectedViewModel(channels));
+            actualResult.ShouldEqual(expectedVideos.TransformToExpectedViewModel(channels, DefaultNumberOfRecordsPerPage));
             query.Pagination.NumberOfPages.ShouldEqual(expectedPages);
         }
 
@@ -190,7 +226,7 @@ namespace TheDevelopersStuff.Tests.Integration
             var actualResult = create_handler().Handle(query);
 
             var expectedOrder = videos
-                .TransformToExpectedViewModel(channels)
+                .TransformToExpectedViewModel(channels, videos.Count())
                 .OrderByDescending(v => v.PublicationDate)
                 .Select(v => v.Id)
                 .Take(pageSize)
@@ -212,8 +248,8 @@ namespace TheDevelopersStuff.Tests.Integration
             };
             
             var expectedOrder = videos
-                .TransformToExpectedViewModel(channels)
-                .OrderBy(v => v.Title);
+                .OrderBy(v => v.Title)
+                .TransformToExpectedViewModel(channels, DefaultNumberOfRecordsPerPage);
 
             execute_sort(orderBy, expectedOrder);
         }
@@ -228,7 +264,7 @@ namespace TheDevelopersStuff.Tests.Integration
                 };
 
             var expectedOrder = videos
-                .TransformToExpectedViewModel(channels)
+                .TransformToExpectedViewModel(channels, DefaultNumberOfRecordsPerPage)
                 .OrderBy(v => v.Likes);
 
             execute_sort(orderBy, expectedOrder);
@@ -244,7 +280,7 @@ namespace TheDevelopersStuff.Tests.Integration
             };
 
             var expectedOrder = videos
-                .TransformToExpectedViewModel(channels)
+                .TransformToExpectedViewModel(channels, DefaultNumberOfRecordsPerPage)
                 .OrderBy(v => v.ChannelInfo.Name);
 
             execute_sort(orderBy, expectedOrder);
@@ -252,10 +288,12 @@ namespace TheDevelopersStuff.Tests.Integration
 
         private void execute_sort(OrderSettings orderBy, IEnumerable<VideoViewModel> expectedOrder)
         {
-            var actualResult = create_handler().Handle(new FindVideosQuery()
+            var query = new FindVideosQuery()
             {
                 OrderBy = orderBy
-            });
+            };
+
+            var actualResult = create_handler().Handle(query);
 
             var expected = expectedOrder
                 .Select(v => v.Id)

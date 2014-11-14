@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TheDevelopersStuff.Backend.Infrastructure;
 using TheDevelopersStuff.Backend.ViewModels;
 
@@ -16,6 +18,8 @@ namespace TheDevelopersStuff.Backend.Queries
 
     public class FindVideosQuery : IQuery<List<VideoViewModel>>, IPagable, ISortable
     {
+        private IEnumerable<string> tags;
+
         public FindVideosQuery()
         {
             Tags = new List<string>();
@@ -29,7 +33,23 @@ namespace TheDevelopersStuff.Backend.Queries
         }
         public string ChannelName { get; set; }
         public int? PublicationYear { get; set; }
-        public IEnumerable<string> Tags { get; set; }
+
+        public IEnumerable<string> Tags {
+            get { return tags; }
+            set 
+            {
+                try
+                {
+                    tags = value
+                        .Select(t => t.ToLower())
+                        .Distinct();
+                }
+                catch (ArgumentNullException)
+                {
+                    tags = null;
+                }
+            }
+        }
 
         public PaginationSettings Pagination { get; set; }
         public OrderSettings OrderBy { get; set; }
