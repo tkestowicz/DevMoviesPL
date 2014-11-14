@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Ploeh.AutoFixture;
 using Should;
 using TheDevelopersStuff.Backend.Infrastructure;
+using TheDevelopersStuff.Backend.Model;
 using TheDevelopersStuff.Backend.Providers;
 using TheDevelopersStuff.Backend.ViewModels;
 using TheDevelopersStuff.Tests.Integration.AutoData;
@@ -45,6 +48,35 @@ namespace TheDevelopersStuff.Tests.Integration
             actualTags
                 .SequenceEqual(expectedTags)
                 .ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Tags__is_not_case_sensitive__returns_distinct_result()
+        {
+            var tag = new Fixture().Create<string>();
+            var randomVideo = new Video();
+
+            randomVideo.Tags = new[]
+            {
+                new Tag()
+                {
+                    Name = tag.ToLower()
+                },
+                new Tag()
+                {
+                    Name = tag.ToUpper()
+                },
+            };
+
+            db.GetCollection<Video>("Videos").Insert(randomVideo);
+
+            var actualTags = execute().Tags;
+
+            const int expectedNumberOfTags = 1;
+
+            actualTags
+                .Count(t => t.Equals(tag, StringComparison.OrdinalIgnoreCase))
+                .ShouldEqual(expectedNumberOfTags);
         }
 
         [Fact]

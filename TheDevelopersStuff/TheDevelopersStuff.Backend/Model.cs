@@ -39,6 +39,23 @@ namespace TheDevelopersStuff.Backend.Model
         }
     }
 
+    public class TagEqualityComparer : IEqualityComparer<string>
+    {
+        public bool Equals(string x, string y)
+        {
+            return string.IsNullOrWhiteSpace(x) == false
+                   && string.IsNullOrWhiteSpace(y) == false
+                   && x.Equals(y, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public int GetHashCode(string obj)
+        {
+            return obj
+                .ToLower()
+                .GetHashCode();
+        }
+    }
+
     public class Channel
     {
         public string Id { get; set; }
