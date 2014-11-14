@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MongoDB.Driver.Builders;
 using Ploeh.AutoFixture;
 using Should;
 using TheDevelopersStuff.Backend.Infrastructure;
@@ -53,8 +54,12 @@ namespace TheDevelopersStuff.Tests.Integration
         [Fact]
         public void Tags__is_not_case_sensitive__returns_distinct_result()
         {
-            var tag = new Fixture().Create<string>();
-            var randomVideo = new Video();
+            var fixture = new Fixture();
+            var tag = fixture.Create<string>();
+            var randomVideo = new Video()
+            {
+                Id = fixture.Create<string>()
+            };
 
             randomVideo.Tags = new[]
             {

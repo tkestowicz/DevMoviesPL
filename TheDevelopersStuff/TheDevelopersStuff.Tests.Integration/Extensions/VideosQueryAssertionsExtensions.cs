@@ -35,9 +35,11 @@ namespace TheDevelopersStuff.Tests.Integration.Extensions
         }
 
         public static IEnumerable<VideoViewModel> TransformToExpectedViewModel(this IEnumerable<Video> videos,
-             IEnumerable<Channel> channels)
+             IEnumerable<Channel> channels, int numberOfElementsPerPage)
         {
-            return videos.Select(v =>
+            return videos
+                .Take(numberOfElementsPerPage)
+                .Select(v =>
             {
                 var channel = channels.FirstOrDefault(c => c.Id == v.ChannelId) ?? new Channel();
 
