@@ -34,7 +34,7 @@
     <script type="text/javascript">
         $(function() {
 
-            videosController.init(@Html.Raw(Json.Encode(controllerSettings)));
+            videosController.init(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(controllerSettings)));
 
         });
     </script>

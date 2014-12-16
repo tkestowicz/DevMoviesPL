@@ -8,6 +8,6 @@
 
 <script>
   $(function() {
-    $( "#tags" ).autocomplete(@Html.Raw(Json.Encode(new { source = @Model.Tags })));
+    $( "#tags" ).autocomplete(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new { source = @Model.Tags })));
   });
   </script>
