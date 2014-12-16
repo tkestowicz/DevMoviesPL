@@ -42,24 +42,6 @@ namespace TheDevelopersStuff.Tests.Unit
         }
 
         [Fact]
-        public void QueryObject__current_page_is_over_the_limit__set_current_page_as_the_last()
-        {
-            var query = new FindVideosQuery();
-
-            query.Pagination.NumberOfRecords = 10;
-            query.Pagination.PerPage = 5;
-
-            query.Pagination.Page = 3;
-
-            const int expectedPage = 2;
-
-            query
-                .Pagination
-                .Page
-                .ShouldEqual(expectedPage);
-        }
-
-        [Fact]
         public void QueryObject__current_page_is_under_the_limit__set_current_page_as_the_first()
         {
             var query = new FindVideosQuery();
@@ -116,6 +98,44 @@ namespace TheDevelopersStuff.Tests.Unit
                 .Tags
                 .Count()
                 .ShouldEqual(expectedNumberOfTags);
+        }
+
+        [Fact]
+        public void QueryObject__number_of_records_is_not_calculated_yet__page_is_set_to_given_value()
+        {
+            var query = new FindVideosQuery();
+
+            var randomValue = FakeData.NumberData.GetNumber();
+
+            query.Pagination.Page = randomValue;
+
+            query
+                .Pagination
+                .Page
+                .ShouldEqual(randomValue);
+        }
+
+        [Fact]
+        public void QueryObject__number_of_records_is_set__page_constraint_is_applied()
+        {
+            var query = new FindVideosQuery();
+
+            const int randomNumberOfRecords = 12;
+            const int randomPerPage = 6;
+
+            const int pageNumberOverRange = 123;
+
+            query.Pagination.Page = pageNumberOverRange;
+            query.Pagination.PerPage = randomPerPage;
+
+            query.Pagination.NumberOfRecords = randomNumberOfRecords;
+
+            const int expectedPage = 2;
+
+            query
+                .Pagination
+                .Page
+                .ShouldEqual(expectedPage);
         }
     }
 }
