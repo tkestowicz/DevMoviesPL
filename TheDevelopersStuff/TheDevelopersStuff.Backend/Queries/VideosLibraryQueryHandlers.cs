@@ -27,7 +27,7 @@ namespace TheDevelopersStuff.Backend.Queries
             if(query == null)
                 query = new FindVideosQuery();
 
-            Func<Channel, bool> name = vid =>
+            Func<Channel, bool> withName = vid =>
             {
                 if (string.IsNullOrEmpty(query.ChannelName) == false)
                     return vid.Name == query.ChannelName;
@@ -35,7 +35,7 @@ namespace TheDevelopersStuff.Backend.Queries
                 return true;
             };
 
-            Func<Video, bool> publicationYear = vid =>
+            Func<Video, bool> withPublicationYear = vid =>
             {
 
                 if (query.PublicationYear.HasValue)
@@ -44,7 +44,7 @@ namespace TheDevelopersStuff.Backend.Queries
                 return true;
             };
 
-            Func<Video, bool> tags = vid =>
+            Func<Video, bool> withTags = vid =>
             {
                 if (query.Tags != null && query.Tags.Any())
                     return vid
@@ -55,42 +55,34 @@ namespace TheDevelopersStuff.Backend.Queries
                 return true;
             };
 
-            var videos = db.GetCollection<Video>("Videos")
-                .FindAll()
-                .Where(publicationYear)
-                .Where(tags)
-                .ToList();
+            Func<IEnumerable<Channel>, Func<Video, bool>> withChannels = matchingChannels =>
+            {
+                var ids = matchingChannels.Select(c => c.Id);
 
-            var channelsToFind = videos
-                .Select(v => v.ChannelId)
-                .Distinct()
-                .ToArray();
+                Func<Video, bool> withChannel = vid => ids.Contains(vid.ChannelId);
+
+                return withChannel;
+            };
 
             var channels = db.GetCollection<Channel>("Channels")
                 .FindAll()
-                .Where(c => channelsToFind.Contains(c.Id))
-                .Where(name)
+                .Where(withName)
                 .ToList();
 
-            channelsToFind = channels
-                .Select(v => v.Id)
-                .Distinct()
-                .ToArray();
+            var videos = db.GetCollection<Video>("Videos")
+                .FindAll()
+                .Where(withPublicationYear)
+                .Where(withTags)
+                .Where(withChannels(channels));
 
-            var partialResult = videos
-                .Where(v => channelsToFind.Contains(v.ChannelId));
+            query.Pagination.NumberOfRecords = videos.Count();
 
-            query.Pagination.NumberOfRecords = partialResult.Count();
-
-            if (query.Pagination.NumberOfPages < query.Pagination.Page)
-                query.Pagination.Page = 1;
-
-            return partialResult
+            return videos
+                .Skip(query.Pagination.NumberOfRecordsToSkip)
+                .Take(query.Pagination.PerPage)
                 .ToViewModel(channels)
                 .AsQueryable()
                 .OrderBy(query.OrderBy.PropertyName, query.OrderBy.Direction)
-                .Skip((query.Pagination.Page - 1) * query.Pagination.PerPage)
-                .Take(query.Pagination.PerPage)
                 .ToList();
         }
     }

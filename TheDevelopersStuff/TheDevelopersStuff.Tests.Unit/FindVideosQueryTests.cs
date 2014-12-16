@@ -36,5 +36,35 @@ namespace TheDevelopersStuff.Tests.Unit
 
             query.Tags.Count().ShouldEqual(expectedNumberOfTags);
         }
+
+        [Fact]
+        public void QueryObject__current_page_is_over_the_limit__set_current_page_as_the_last()
+        {
+            var query = new FindVideosQuery();
+
+            query.Pagination.NumberOfRecords = 10;
+            query.Pagination.PerPage = 5;
+
+            query.Pagination.Page = 3;
+
+            const int expectedPage = 2;
+
+            query.Pagination.Page.ShouldEqual(expectedPage);
+        }
+
+        [Fact]
+        public void QueryObject__current_page_is_under_the_limit__set_current_page_as_the_first()
+        {
+            var query = new FindVideosQuery();
+
+            query.Pagination.NumberOfRecords = 10;
+            query.Pagination.PerPage = 5;
+
+            query.Pagination.Page = 0;
+
+            const int expectedPage = 1;
+
+            query.Pagination.Page.ShouldEqual(expectedPage);
+        }
     }
 }

@@ -226,10 +226,10 @@ namespace TheDevelopersStuff.Tests.Integration
             var actualResult = create_handler().Handle(query);
 
             var expectedOrder = videos
+                .Take(pageSize)
                 .TransformToExpectedViewModel(channels, videos.Count())
                 .OrderByDescending(v => v.PublicationDate)
                 .Select(v => v.Id)
-                .Take(pageSize)
                 .ToArray();
 
             actualResult
