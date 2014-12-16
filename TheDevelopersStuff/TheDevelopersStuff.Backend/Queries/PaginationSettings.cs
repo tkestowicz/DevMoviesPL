@@ -4,15 +4,35 @@ namespace TheDevelopersStuff.Backend.Queries
 {
     public class PaginationSettings
     {
+        private int page;
+
         public PaginationSettings(int defaultPage = 1, int defaultPerPage = 10)
         {
             Page = defaultPage;
             PerPage = defaultPerPage;
         }
 
-        internal int NumberOfRecords { get; set; }
+        internal int NumberOfRecords { private get; set; }
 
-        public int Page { get; set; }
+        internal int NumberOfRecordsToSkip
+        {
+            get { return (Page - 1) * PerPage; }
+        }
+
+        public int Page
+        {
+            get { return page; }
+            set
+            {
+                if (NumberOfPages < value)
+                    page = NumberOfPages;
+                else if (value <= 0)
+                    page = 1;
+                else
+                    page = value;
+            }
+        }
+
         public int PerPage { get; set; }
 
         public int NumberOfPages

@@ -4,7 +4,17 @@ namespace TheDevelopersStuff.Backend.Queries
 {
     public class OrderSettings
     {
-        public string PropertyName { get; set; }
+        private string propertyName;
+
+        public string PropertyName
+        {
+            get { return propertyName; }
+            set
+            {
+                if(string.IsNullOrWhiteSpace(value) == false)
+                    propertyName = value;
+            }
+        }
 
         public OrderDirectionEnum Direction { get; set; }
     }
