@@ -33,15 +33,6 @@ namespace TheDevelopersStuff.Web.UI.Controllers
                 Tags = @params.Tags
             };
 
-            if (@params.Tags != null && @params.Tags.Any())
-                query.Tags = @params.Tags.Where(t => !string.IsNullOrEmpty(t));
-
-            if (string.IsNullOrEmpty(@params.PropertyName) == false)
-            {
-                query.OrderBy.Direction = @params.Direction;
-                query.OrderBy.PropertyName = @params.PropertyName;   
-            }
-
             query.Pagination.Page = @params.Page ?? 1;
             query.Pagination.PerPage = 12;
 

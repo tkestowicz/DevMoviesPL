@@ -41,6 +41,7 @@ namespace TheDevelopersStuff.Backend.Queries
                 try
                 {
                     tags = value
+                        .Where(t => !string.IsNullOrEmpty(t))
                         .Select(t => t.ToLower())
                         .Distinct();
                 }
